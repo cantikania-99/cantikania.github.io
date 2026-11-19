@@ -347,6 +347,9 @@ PANDUAN EDIT PORTOFOLIO
           <article class="card">
             <h3>Jobsheet & laporan praktikum</h3>
             <p>Dokumentasi tujuan, alat dan bahan, tahapan konfigurasi, hasil pengujian, serta kesimpulan.</p>
+         <button class="btn primary" onclick="openDnsJobsheet()">
+  Lihat Jobsheet DNS ↗
+         </button>
           </article>
           <article class="card">
             <h3>Catatan troubleshooting</h3>
@@ -454,6 +457,49 @@ PANDUAN EDIT PORTOFOLIO
       }
     });
   </script>
+<!-- POP-UP JOBSHEET DNS -->
+<div class="gallery-modal" id="dnsJobsheet">
+  <div class="gallery-panel">
 
+    <div class="gallery-header">
+      <div>
+        <div class="eyebrow">Dokumentasi / Jobsheet</div>
+        <h2>Jobsheet DNS</h2>
+      </div>
+
+      <button class="gallery-close"
+        onclick="closeDnsJobsheet()">
+        Tutup ✕
+      </button>
+    </div>
+
+    <iframe
+      src="documents/jobsheet-dns.pdf"
+      width="100%"
+      height="550"
+      style="border:0; border-radius:10px; background:white;">
+    </iframe>
+
+    <p class="gallery-note">
+      Jobsheet Domain Name System (DNS).
+    </p>
+
+  </div>
+</div>
+   <script>
+function openDnsJobsheet() {
+  document.getElementById("dnsJobsheet")
+    .classList.add("open");
+
+  document.body.style.overflow = "hidden";
+}
+
+function closeDnsJobsheet() {
+  document.getElementById("dnsJobsheet")
+    .classList.remove("open");
+
+  document.body.style.overflow = "";
+}
+</script>
 </body>
 </html>
