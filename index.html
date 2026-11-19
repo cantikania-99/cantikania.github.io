@@ -280,7 +280,7 @@ PANDUAN EDIT PORTOFOLIO
           <article class="card">
             <div class="project-top"><span class="label">Server</span><span class="tag">Praktik mandiri</span></div>
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
-            <div class="project-image"><img src="images/debian.jpg" alt="Dokumentasi Debian Server di VirtualBox" onerror="this.parentElement.style.display='none'"></div>
+            <div class="project-image"><img src="images/debian.png" alt="Dokumentasi Debian Server di VirtualBox" onerror="this.parentElement.style.display='none'"></div>
             <h3>Instalasi Debian Server di VirtualBox</h3>
             <p>Menyiapkan lingkungan virtual Debian untuk mempelajari administrasi server dan pengujian layanan jaringan.</p>
             <div class="taglist"><span class="tag">Debian 9</span><span class="tag">VirtualBox</span><span class="tag">Linux</span></div>
@@ -315,21 +315,21 @@ PANDUAN EDIT PORTOFOLIO
           <p>Ruang untuk menampilkan karya desain grafis: logo, branding, poster, dan layout. Kartu berikut adalah slot portofolio yang bisa kamu ganti dengan gambar karya asli.</p>
         </div>
         <div class="creative-grid">
-          <article class="card creative-card">
+          <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="logoGallery" onclick='openGallery("logoGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("logoGallery");}'>
             <div class="image-slot"><img src="images/logo.png" alt="Karya logo dan branding" onerror="this.style.display='none'"></div>
-            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai proyek logo yang kamu tampilkan.</div></div>
+            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="gallery-hint">Klik untuk melihat galeri ↗</div></div>
           </article>
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="posterGallery" onclick="openPosterGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPosterGallery();}">
-            <div class="image-slot"><img src="images/poster.jpg" alt="Pratinjau karya poster" onerror="this.style.display='none'"></div>
+            <div class="image-slot"><img src="images/creative-art poster.png" alt="Pratinjau karya poster" onerror="this.style.display='none'"></div>
             <div class="creative-copy"><div class="design-label">02 · Poster</div><h3>Poster & Promosi</h3><p>Latihan hierarki informasi, komposisi, warna, dan tipografi agar pesan mudah dipahami.</p><div class="gallery-hint">Klik untuk melihat galeri poster ↗</div></div>
           </article>
-          <article class="card creative-card">
+          <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="layoutGallery" onclick='openGallery("layoutGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("layoutGallery");}'>
             <div class="image-slot"><img src="images/layout.jpg" alt="Karya layout dan editorial" onerror="this.style.display='none'"></div>
-            <div class="creative-copy"><div class="design-label">03 · Layout</div><h3>Layout & Editorial</h3><p>Pengaturan elemen, grid, ruang kosong, dan tipografi untuk desain yang terstruktur.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai karya layout-mu.</div></div>
+            <div class="creative-copy"><div class="design-label">03 · Layout</div><h3>Layout & Editorial</h3><p>Pengaturan elemen, grid, ruang kosong, dan tipografi untuk desain yang terstruktur.</p><div class="gallery-hint">Klik untuk melihat galeri ↗</div></div>
           </article>
-          <article class="card creative-card">
+          <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="artworkGallery" onclick='openGallery("artworkGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("artworkGallery");}'>
             <div class="image-slot"><img src="images/artwork.jpg" alt="Eksplorasi visual" onerror="this.style.display='none'"></div>
-            <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai karya pilihanmu.</div></div>
+            <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="gallery-hint">Klik untuk melihat galeri ↗</div></div>
           </article>
         </div>
         <div class="note">Tips: tampilkan 3–6 karya terbaik. Untuk setiap karya, tulis tujuan desain, peranmu, tools yang digunakan, dan alasan pilihan visual. Jangan mengaku proyek klien jika sebenarnya proyek latihan.</div>
@@ -368,14 +368,45 @@ PANDUAN EDIT PORTOFOLIO
           <button class="gallery-close" type="button" onclick="closePosterGallery()" aria-label="Tutup galeri">Tutup ✕</button>
         </div>
         <div class="gallery-grid">
-          <figure class="gallery-item"><img src="images/poster-1.jpg" alt="Poster karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Poster 01</figcaption></figure>
-          <figure class="gallery-item"><img src="images/poster-2.jpg" alt="Poster karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Poster 02</figcaption></figure>
-          <figure class="gallery-item"><img src="images/poster-3.jpg" alt="Poster karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Poster 03</figcaption></figure>
-          <figure class="gallery-item"><img src="images/poster-4.jpg" alt="Poster karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Poster 04</figcaption></figure>
-          <figure class="gallery-item"><img src="images/poster-5.jpg" alt="Poster karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Poster 05</figcaption></figure>
-          <figure class="gallery-item"><img src="images/poster-6.jpg" alt="Poster karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Poster 06</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-1.png" alt="Poster karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Poster 01</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-2.png" alt="Poster karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Poster 02</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-3.png" alt="Poster karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Poster 03</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-4.png" alt="Poster karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Poster 04</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-5.png" alt="Poster karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Poster 05</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-6.png" alt="Poster karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Poster 06</figcaption></figure>
         </div>
-        <p class="gallery-note">EDIT: Upload poster ke folder <code>images</code> dengan nama poster-1.jpg sampai poster-6.jpg. Jika belum ada karya, slot yang belum terisi otomatis disembunyikan.</p>
+        <p class="gallery-note">NOTE: Unoficial art work!!.</p>
+      </div>
+    </div>
+
+<div class="gallery-modal" id="logoGallery" role="dialog" aria-modal="true" aria-labelledby="logoGalleryTitle" onclick='if(event.target===this)closeGallery("logoGallery")'>
+      <div class="gallery-panel">
+        <div class="gallery-header">
+          <div><div class="eyebrow">Creative Works</div><h2 id="logoGalleryTitle">Logo & Branding</h2></div>
+          <button class="gallery-close" type="button" onclick='closeGallery("logoGallery")'>Tutup ✕</button>
+        </div>
+        <div class="gallery-grid"><figure class="gallery-item"><img src="images/logo-1.png" alt="Logo & Branding karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 01</figcaption></figure><figure class="gallery-item"><img src="images/logo-2.png" alt="Logo & Branding karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 02</figcaption></figure><figure class="gallery-item"><img src="images/logo-3.png" alt="Logo & Branding karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 03</figcaption></figure><figure class="gallery-item"><img src="images/logo-4.png" alt="Logo & Branding karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 04</figcaption></figure><figure class="gallery-item"><img src="images/logo-5.png" alt="Logo & Branding karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 05</figcaption></figure><figure class="gallery-item"><img src="images/logo-6.png" alt="Logo & Branding karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 06</figcaption></figure></div>
+        <p class="gallery-note">Upload gambar ke folder <code>images</code> dengan nama logo-1.png sampai logo-6.png. Slot tanpa gambar otomatis disembunyikan.</p>
+      </div>
+    </div>
+<div class="gallery-modal" id="layoutGallery" role="dialog" aria-modal="true" aria-labelledby="layoutGalleryTitle" onclick='if(event.target===this)closeGallery("layoutGallery")'>
+      <div class="gallery-panel">
+        <div class="gallery-header">
+          <div><div class="eyebrow">Creative Works</div><h2 id="layoutGalleryTitle">Layout & Editorial</h2></div>
+          <button class="gallery-close" type="button" onclick='closeGallery("layoutGallery")'>Tutup ✕</button>
+        </div>
+        <div class="gallery-grid"><figure class="gallery-item"><img src="images/layout-1.jpg" alt="Layout & Editorial karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 01</figcaption></figure><figure class="gallery-item"><img src="images/layout-2.jpg" alt="Layout & Editorial karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 02</figcaption></figure><figure class="gallery-item"><img src="images/layout-3.jpg" alt="Layout & Editorial karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 03</figcaption></figure><figure class="gallery-item"><img src="images/layout-4.jpg" alt="Layout & Editorial karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 04</figcaption></figure><figure class="gallery-item"><img src="images/layout-5.jpg" alt="Layout & Editorial karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 05</figcaption></figure><figure class="gallery-item"><img src="images/layout-6.jpg" alt="Layout & Editorial karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Layout & Editorial 06</figcaption></figure></div>
+        <p class="gallery-note">Upload gambar ke folder <code>images</code> dengan nama layout-1.jpg sampai layout-6.jpg. Slot tanpa gambar otomatis disembunyikan.</p>
+      </div>
+    </div>
+<div class="gallery-modal" id="artworkGallery" role="dialog" aria-modal="true" aria-labelledby="artworkGalleryTitle" onclick='if(event.target===this)closeGallery("artworkGallery")'>
+      <div class="gallery-panel">
+        <div class="gallery-header">
+          <div><div class="eyebrow">Creative Works</div><h2 id="artworkGalleryTitle">Eksplorasi Visual</h2></div>
+          <button class="gallery-close" type="button" onclick='closeGallery("artworkGallery")'>Tutup ✕</button>
+        </div>
+        <div class="gallery-grid"><figure class="gallery-item"><img src="images/artwork-1.jpg" alt="Eksplorasi Visual karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 01</figcaption></figure><figure class="gallery-item"><img src="images/artwork-2.jpg" alt="Eksplorasi Visual karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 02</figcaption></figure><figure class="gallery-item"><img src="images/artwork-3.jpg" alt="Eksplorasi Visual karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 03</figcaption></figure><figure class="gallery-item"><img src="images/artwork-4.jpg" alt="Eksplorasi Visual karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 04</figcaption></figure><figure class="gallery-item"><img src="images/artwork-5.jpg" alt="Eksplorasi Visual karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 05</figcaption></figure><figure class="gallery-item"><img src="images/artwork-6.jpg" alt="Eksplorasi Visual karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Eksplorasi Visual 06</figcaption></figure></div>
+        <p class="gallery-note">Upload gambar ke folder <code>images</code> dengan nama artwork-1.jpg sampai artwork-6.jpg. Slot tanpa gambar otomatis disembunyikan.</p>
       </div>
     </div>
 
@@ -399,18 +430,28 @@ PANDUAN EDIT PORTOFOLIO
   <footer><div class="wrap">© 2026 Cantikania Finata · IT & Creative Portfolio</div></footer>
 
   <script>
-    function openPosterGallery() {
-      const gallery = document.getElementById('posterGallery');
+    function openGallery(id) {
+      const gallery = document.getElementById(id);
+      if (!gallery) return;
       gallery.classList.add('open');
       document.body.style.overflow = 'hidden';
-      gallery.querySelector('.gallery-close').focus();
+      const closeButton = gallery.querySelector('.gallery-close');
+      if (closeButton) closeButton.focus();
     }
-    function closePosterGallery() {
-      document.getElementById('posterGallery').classList.remove('open');
-      document.body.style.overflow = '';
+    function closeGallery(id) {
+      const gallery = document.getElementById(id);
+      if (!gallery) return;
+      gallery.classList.remove('open');
+      if (!document.querySelector('.gallery-modal.open')) document.body.style.overflow = '';
     }
+    function openPosterGallery() { openGallery('posterGallery'); }
+    function closePosterGallery() { closeGallery('posterGallery'); }
     document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') closePosterGallery();
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.gallery-modal.open').forEach(function(gallery) {
+          closeGallery(gallery.id);
+        });
+      }
     });
   </script>
 
