@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<!--
+PANDUAN EDIT PORTOFOLIO
+1. Ganti teks yang ditandai "EDIT:" sesuai informasi dan pengalamanmu.
+2. Simpan foto/karya di folder images pada repository GitHub.
+3. Nama file gambar yang digunakan:
+   images/profil.jpg
+   images/logo.png
+   images/poster.jpg
+   images/layout.jpg
+   images/artwork.jpg
+   images/it-mikrotik.jpg
+   images/debian.jpg
+   images/samba.jpg
+   images/layanan.jpg
+4. Jika belum punya gambar untuk suatu bagian, biarkan slot gambarnya kosong
+   dan gunakan inisial/visual cadangan yang tersedia.
+5. Ganti email, username GitHub, dan tautan sosial di bagian KONTAK.
+-->
+
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -75,6 +94,14 @@
       .hero-card { padding: 22px; }
     }
   
+    /* EDIT: Tampilan gambar portofolio */
+    .avatar { position: relative; overflow: hidden; }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
+    .image-slot { min-height: 175px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg,#172d48,#263e5e); }
+    .image-slot img { width: 100%; height: 100%; min-height: 175px; max-height: 280px; object-fit: cover; display: block; }
+    .project-image { margin: -23px -23px 18px; overflow: hidden; background: #142943; }
+    .project-image img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .edit-hint { color: #9fb4cc; font-size: .78rem; margin-top: 8px; }
     .creative-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .creative-card{overflow:hidden;padding:0}
     .creative-art{min-height:175px;display:grid;place-items:center;text-align:center;padding:24px;background:linear-gradient(135deg,#172d48,#40345f)}
@@ -89,6 +116,63 @@
     .design-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;font-weight:850;color:#c3a8ff}
     .placeholder{font-size:.76rem;color:#c6b6ed;margin-top:12px}
     @media(max-width:760px){.creative-grid{grid-template-columns:1fr}}
+
+
+    /* Galeri pop-up untuk karya Creative Works */
+    .gallery-open {
+      cursor: pointer;
+      width: 100%;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      border: 0;
+    }
+    .gallery-open:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+    .gallery-hint { color: var(--cyan); font-size: .8rem; margin-top: 10px; font-weight: 700; }
+    .gallery-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      padding: 24px;
+      background: rgba(2, 8, 16, .88);
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-modal.open { display: flex; }
+    .gallery-panel {
+      width: min(900px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #0d1b2d;
+      border: 1px solid #294969;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 24px 80px #0009;
+    }
+    .gallery-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+    .gallery-header h2 { margin: 0; font-size: 1.5rem; }
+    .gallery-close {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: #10233a;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font: inherit;
+    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .gallery-item { margin: 0; background: #10233a; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .gallery-item img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+    .gallery-item figcaption { padding: 9px 11px; color: var(--muted); font-size: .85rem; }
+    .gallery-note { color: var(--muted); font-size: .85rem; margin: 16px 0 0; }
+    @media(max-width: 650px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-modal { padding: 12px; }
+      .gallery-panel { padding: 16px; }
+    }
+    @media(max-width: 380px) { .gallery-grid { grid-template-columns: 1fr; } }
 
   </style>
 </head>
@@ -109,15 +193,16 @@
     <div class="wrap hero" id="beranda">
       <div>
         <div class="eyebrow">Personal Portfolio · Teknik Komputer dan Jaringan</div>
-        <h1>Cantikania<br><span>Finata.</span></h1>
-        <p class="lead">Pelajar SMK bidang Teknik Komputer dan Jaringan yang tertarik pada jaringan komputer, administrasi server, dan troubleshooting. Saya senang belajar melalui praktik, mendokumentasikan proses, dan mencari solusi dari masalah teknis.</p>
+        <!-- EDIT: Nama yang tampil di halaman utama. -->\n        <h1>Cantikania<br><span>Finata.</span></h1>
+        <!-- EDIT: Perkenalan singkat tentang dirimu. -->\n        <p class="lead">Pelajar SMK bidang Teknik Komputer dan Jaringan yang tertarik pada jaringan komputer, administrasi server, dan troubleshooting. Saya senang belajar melalui praktik, mendokumentasikan proses, dan mencari solusi dari masalah teknis.</p>
         <div class="actions">
           <a class="btn primary" href="#proyek">Lihat Proyek</a>
           <a class="btn" href="#kontak">Hubungi Saya</a>
         </div>
       </div>
       <aside class="hero-card">
-        <div class="avatar">CF</div>
+        <!-- EDIT: Ganti images/profil.jpg dengan foto profilmu. Jika belum ada foto, huruf CF tetap tampil. -->
+        <div class="avatar"><span>CF</span><img src="images/profil.jpg" alt="Foto profil Cantikania" onerror="this.style.display='none'"></div>
         <h2>Junior IT Learner</h2>
         <p>Networking · Server Administration · Technical Support</p>
         <div class="status"><span class="dot"></span> Terbuka untuk belajar dan peluang pemula</div>
@@ -129,7 +214,7 @@
         <div class="section-head">
           <div class="eyebrow">01 / Tentang Saya</div>
           <h2>Belajar dengan praktik nyata.</h2>
-          <p>Saya merupakan pelajar SMK jurusan Teknik Komputer dan Jaringan (TKJ). Selama pembelajaran, saya mengenal dasar konfigurasi perangkat jaringan, instalasi sistem operasi server, serta pengujian layanan jaringan di lingkungan praktik.</p>
+          <!-- EDIT: Ubah paragraf ini jika ingin memperbarui profil. -->\n          <p>Saya merupakan pelajar SMK jurusan Teknik Komputer dan Jaringan (TKJ). Selama pembelajaran, saya mengenal dasar konfigurasi perangkat jaringan, instalasi sistem operasi server, serta pengujian layanan jaringan di lingkungan praktik.</p>
         </div>
         <div class="grid">
           <article class="card">
@@ -186,24 +271,32 @@
         <div class="grid">
           <article class="card">
             <div class="project-top"><span class="label">Jaringan</span><span class="tag">Praktik sekolah</span></div>
+            <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
+            <div class="project-image"><img src="images/it-mikrotik.jpg" alt="Dokumentasi praktik MikroTik dan Winbox" onerror="this.parentElement.style.display='none'"></div>
             <h3>Konfigurasi MikroTik menggunakan Winbox</h3>
             <p>Mempelajari pengaturan jaringan pada router MikroTik dan memahami hubungan perangkat dalam topologi LAN.</p>
             <div class="taglist"><span class="tag">MikroTik</span><span class="tag">Winbox</span><span class="tag">Topologi LAN</span></div>
           </article>
           <article class="card">
             <div class="project-top"><span class="label">Server</span><span class="tag">Praktik mandiri</span></div>
+            <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
+            <div class="project-image"><img src="images/debian.jpg" alt="Dokumentasi Debian Server di VirtualBox" onerror="this.parentElement.style.display='none'"></div>
             <h3>Instalasi Debian Server di VirtualBox</h3>
             <p>Menyiapkan lingkungan virtual Debian untuk mempelajari administrasi server dan pengujian layanan jaringan.</p>
             <div class="taglist"><span class="tag">Debian 9</span><span class="tag">VirtualBox</span><span class="tag">Linux</span></div>
           </article>
           <article class="card">
             <div class="project-top"><span class="label">File Sharing</span><span class="tag">Praktik</span></div>
+            <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
+            <div class="project-image"><img src="images/samba.jpg" alt="Dokumentasi konfigurasi Samba Server" onerror="this.parentElement.style.display='none'"></div>
             <h3>Konfigurasi Samba Server</h3>
             <p>Mempelajari pembuatan folder berbagi di Debian dan menguji akses dari komputer klien melalui jaringan lokal.</p>
             <div class="taglist"><span class="tag">Samba</span><span class="tag">Debian</span><span class="tag">Windows Client</span></div>
           </article>
           <article class="card">
             <div class="project-top"><span class="label">Layanan Jaringan</span><span class="tag">Materi praktik</span></div>
+            <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
+            <div class="project-image"><img src="images/layanan.jpg" alt="Dokumentasi layanan SSH FTP DHCP dan DNS" onerror="this.parentElement.style.display='none'"></div>
             <h3>Pengenalan SSH, FTP, DHCP, dan DNS</h3>
             <p>Mempelajari fungsi layanan jaringan dan tahapan konfigurasi serta pengujian dasar dalam lingkungan server.</p>
             <div class="taglist"><span class="tag">SSH</span><span class="tag">FTP</span><span class="tag">DHCP</span><span class="tag">DNS</span></div>
@@ -223,20 +316,20 @@
         </div>
         <div class="creative-grid">
           <article class="card creative-card">
-            <div class="creative-art brand"><div><div class="art-mark">NOVA</div><div class="art-sub">Brand identity concept</div></div></div>
-            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="placeholder">Slot karya — ganti visual contoh dengan desain logomu.</div></div>
+            <div class="image-slot"><img src="images/logo.png" alt="Karya logo dan branding" onerror="this.style.display='none'"></div>
+            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai proyek logo yang kamu tampilkan.</div></div>
+          </article>
+          <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="posterGallery" onclick="openPosterGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPosterGallery();}">
+            <div class="image-slot"><img src="images/poster.jpg" alt="Pratinjau karya poster" onerror="this.style.display='none'"></div>
+            <div class="creative-copy"><div class="design-label">02 · Poster</div><h3>Poster & Promosi</h3><p>Latihan hierarki informasi, komposisi, warna, dan tipografi agar pesan mudah dipahami.</p><div class="gallery-hint">Klik untuk melihat galeri poster ↗</div></div>
           </article>
           <article class="card creative-card">
-            <div class="creative-art poster.png"><div><div class="art-mark">CREATE<br>YOUR<br>SPACE</div><div class="art-sub">Poster design study</div></div></div>
-            <div class="creative-copy"><div class="design-label">02 · Poster</div><h3>Poster & Promosi</h3><p>Latihan hierarki informasi, komposisi, warna, dan tipografi agar pesan mudah dipahami.</p><div class="placeholder">Slot karya — tambahkan poster buatanmu.</div></div>
+            <div class="image-slot"><img src="images/layout.jpg" alt="Karya layout dan editorial" onerror="this.style.display='none'"></div>
+            <div class="creative-copy"><div class="design-label">03 · Layout</div><h3>Layout & Editorial</h3><p>Pengaturan elemen, grid, ruang kosong, dan tipografi untuk desain yang terstruktur.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai karya layout-mu.</div></div>
           </article>
           <article class="card creative-card">
-            <div class="creative-art layout"><div><div class="art-mark">GRID / 01</div><div class="art-sub">Editorial layout</div></div></div>
-            <div class="creative-copy"><div class="design-label">03 · Layout</div><h3>Layout & Editorial</h3><p>Pengaturan elemen, grid, ruang kosong, dan tipografi untuk desain yang terstruktur.</p><div class="placeholder">Slot karya — tambahkan desain layout atau halaman.</div></div>
-          </article>
-          <article class="card creative-card">
-            <div class="creative-art"><div><div class="art-mark">CF ✳</div><div class="art-sub">Visual exploration</div></div></div>
-            <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="placeholder">Slot karya — tambahkan karya pilihanmu.</div></div>
+            <div class="image-slot"><img src="images/artwork.jpg" alt="Eksplorasi visual" onerror="this.style.display='none'"></div>
+            <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="placeholder">EDIT: Ganti judul dan deskripsi sesuai karya pilihanmu.</div></div>
           </article>
         </div>
         <div class="note">Tips: tampilkan 3–6 karya terbaik. Untuk setiap karya, tulis tujuan desain, peranmu, tools yang digunakan, dan alasan pilihan visual. Jangan mengaku proyek klien jika sebenarnya proyek latihan.</div>
@@ -263,6 +356,29 @@
       </div>
     </section>
 
+
+    <!-- GALERI POSTER: ganti nama file dan judul sesuai karya yang kamu upload ke folder images -->
+    <div class="gallery-modal" id="posterGallery" role="dialog" aria-modal="true" aria-labelledby="posterGalleryTitle" onclick="if(event.target===this)closePosterGallery()">
+      <div class="gallery-panel">
+        <div class="gallery-header">
+          <div>
+            <div class="eyebrow">Creative Works / 02</div>
+            <h2 id="posterGalleryTitle">Poster & Promosi</h2>
+          </div>
+          <button class="gallery-close" type="button" onclick="closePosterGallery()" aria-label="Tutup galeri">Tutup ✕</button>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item"><img src="images/poster-1.jpg" alt="Poster karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Poster 01</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-2.jpg" alt="Poster karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Poster 02</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-3.jpg" alt="Poster karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Poster 03</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-4.jpg" alt="Poster karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Poster 04</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-5.jpg" alt="Poster karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Poster 05</figcaption></figure>
+          <figure class="gallery-item"><img src="images/poster-6.jpg" alt="Poster karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Poster 06</figcaption></figure>
+        </div>
+        <p class="gallery-note">EDIT: Upload poster ke folder <code>images</code> dengan nama poster-1.jpg sampai poster-6.jpg. Jika belum ada karya, slot yang belum terisi otomatis disembunyikan.</p>
+      </div>
+    </div>
+
     <section id="kontak">
       <div class="wrap contact">
         <div>
@@ -271,13 +387,32 @@
           <p style="margin:0;color:var(--muted)">Untuk peluang PKL, kolaborasi belajar, atau pekerjaan pemula di bidang IT.</p>
         </div>
         <div class="actions" style="margin:0">
-          <!-- Ganti alamat email di bawah ini dengan email profesional milikmu. -->
+          <!-- EDIT: Ganti email dan username/link akunmu. Hapus tombol yang tidak ingin ditampilkan. -->
           <a class="btn primary" href="mailto:emailkamu@example.com">Email Saya</a>
+          <a class="btn" href="https://github.com/usernamekamu" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/usernamekamu" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn" href="#beranda">Kembali ke atas ↑</a>
         </div>
       </div>
     </section>
   </main>
   <footer><div class="wrap">© 2026 Cantikania Finata · IT & Creative Portfolio</div></footer>
+
+  <script>
+    function openPosterGallery() {
+      const gallery = document.getElementById('posterGallery');
+      gallery.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      gallery.querySelector('.gallery-close').focus();
+    }
+    function closePosterGallery() {
+      document.getElementById('posterGallery').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') closePosterGallery();
+    });
+  </script>
+
 </body>
 </html>
