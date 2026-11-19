@@ -193,8 +193,8 @@ PANDUAN EDIT PORTOFOLIO
     <div class="wrap hero" id="beranda">
       <div>
         <div class="eyebrow">Personal Portfolio · Teknik Komputer dan Jaringan</div>
-        <!-- EDIT: Nama yang tampil di halaman utama. -->\n        <h1>Cantikania<br><span>Finata.</span></h1>
-        <!-- EDIT: Perkenalan singkat tentang dirimu. -->\n        <p class="lead">Pelajar SMK bidang Teknik Komputer dan Jaringan yang tertarik pada jaringan komputer, administrasi server, dan troubleshooting. Saya senang belajar melalui praktik, mendokumentasikan proses, dan mencari solusi dari masalah teknis.</p>
+        <!-- EDIT: Nama yang tampil di halaman utama. -->        <h1>Cantikania<br><span>Finata.</span></h1>
+        <!-- EDIT: Perkenalan singkat tentang dirimu. -->        <p class="lead">Pelajar SMKN 1 Nglipar bidang Teknik Komputer dan Jaringan yang tertarik pada jaringan komputer, administrasi server, dan troubleshooting. Saya senang belajar melalui praktik, mendokumentasikan proses, dan mencari solusi dari masalah teknis.</p>
         <div class="actions">
           <a class="btn primary" href="#proyek">Lihat Proyek</a>
           <a class="btn" href="#kontak">Hubungi Saya</a>
@@ -214,7 +214,7 @@ PANDUAN EDIT PORTOFOLIO
         <div class="section-head">
           <div class="eyebrow">01 / Tentang Saya</div>
           <h2>Belajar dengan praktik nyata.</h2>
-          <!-- EDIT: Ubah paragraf ini jika ingin memperbarui profil. -->\n          <p>Saya merupakan pelajar SMK jurusan Teknik Komputer dan Jaringan (TKJ). Selama pembelajaran, saya mengenal dasar konfigurasi perangkat jaringan, instalasi sistem operasi server, serta pengujian layanan jaringan di lingkungan praktik.</p>
+          <!-- EDIT: Ubah paragraf ini jika ingin memperbarui profil. -->          <p>Saya merupakan pelajar SMKN 1 Nglipar jurusan Teknik Komputer dan Jaringan (TKJ). Selama pembelajaran, saya mengenal dasar konfigurasi perangkat jaringan, instalasi sistem operasi server, serta pengujian layanan jaringan di lingkungan praktik.</p>
         </div>
         <div class="grid">
           <article class="card">
@@ -302,7 +302,7 @@ PANDUAN EDIT PORTOFOLIO
             <div class="taglist"><span class="tag">SSH</span><span class="tag">FTP</span><span class="tag">DHCP</span><span class="tag">DNS</span></div>
           </article>
         </div>
-        <div class="note">Catatan: proyek ditulis sebagai pengalaman praktik/pembelajaran, bukan klaim pengalaman kerja profesional. Tambahkan screenshot konfigurasi, diagram topologi, dan hasil pengujian setelah dokumentasi siap.</div>
+        <div class="note">Catatan: proyek ditulis sebagai pengalaman praktik/pembelajaran, bukan klaim pengalaman kerja profesional.</div>
       </div>
     </section>
 
@@ -312,7 +312,7 @@ PANDUAN EDIT PORTOFOLIO
         <div class="section-head">
           <div class="eyebrow">04 / Creative Works</div>
           <h2>Ideas into visual identity.</h2>
-          <p>Ruang untuk menampilkan karya desain grafis: logo, branding, poster, dan layout. Kartu berikut adalah slot portofolio yang bisa kamu ganti dengan gambar karya asli.</p>
+          <p>Ruang untuk menampilkan karya desain grafis: logo, branding, poster, dan layout.</p>
         </div>
         <div class="creative-grid">
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="logoGallery" onclick='openGallery("logoGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("logoGallery");}'>
@@ -332,7 +332,7 @@ PANDUAN EDIT PORTOFOLIO
             <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="gallery-hint">Klik untuk melihat galeri ↗</div></div>
           </article>
         </div>
-        <div class="note">Tips: tampilkan 3–6 karya terbaik. Untuk setiap karya, tulis tujuan desain, peranmu, tools yang digunakan, dan alasan pilihan visual. Jangan mengaku proyek klien jika sebenarnya proyek latihan.</div>
+        <div class="note">Karya diatas hanya sebagai proyek latihan dan tidak official.</div>
       </div>
     </section>
 
@@ -347,8 +347,19 @@ PANDUAN EDIT PORTOFOLIO
           <article class="card">
             <h3>Jobsheet & laporan praktikum</h3>
             <p>Dokumentasi tujuan, alat dan bahan, tahapan konfigurasi, hasil pengujian, serta kesimpulan.</p>
-        <button class="btn primary" onclick="openDnsJobsheet()">
-  Lihat Jobsheet DNS ↗
+    <button class="btn primary"
+  onclick="openDocument('Jobsheet DNS', 'documents/jobsheet-dns.pdf')">
+  Jobsheet DNS ↗
+</button>
+
+<button class="btn primary"
+  onclick="openDocument('Jobsheet SSH', 'documents/jobsheet-ssh.pdf')">
+  Jobsheet SSH ↗
+</button>
+
+<button class="btn primary"
+  onclick="openDocument('Jobsheet FTP', 'documents/jobsheet-ftp.pdf')">
+  Jobsheet FTP ↗
 </button>
           </article>
           <article class="card">
@@ -457,32 +468,24 @@ PANDUAN EDIT PORTOFOLIO
       }
     });
   </script>
-<!-- POP-UP JOBSHEET DNS -->
-<div class="gallery-modal" id="dnsJobsheet">
+<!-- POP-UP DOKUMENTASI -->
+<div class="gallery-modal" id="documentModal">
   <div class="gallery-panel">
 
     <div class="gallery-header">
-      <div>
-        <div class="eyebrow">Dokumentasi / Jobsheet</div>
-        <h2>Jobsheet DNS</h2>
-      </div>
+      <h2 id="documentTitle">Dokumentasi</h2>
 
       <button class="gallery-close"
-        onclick="closeDnsJobsheet()">
+        onclick="closeDocument()">
         Tutup ✕
       </button>
     </div>
 
-    <iframe
-      src="documents/jobsheet-dns.pdf"
+    <iframe id="documentViewer"
       width="100%"
       height="550"
-      style="border:0; border-radius:10px; background:white;">
+      style="border:0; background:white; border-radius:10px;">
     </iframe>
-
-    <p class="gallery-note">
-      Jobsheet Domain Name System (DNS).
-    </p>
 
   </div>
 </div>
@@ -497,6 +500,26 @@ function openDnsJobsheet() {
 function closeDnsJobsheet() {
   document.getElementById("dnsJobsheet")
     .classList.remove("open");
+
+  document.body.style.overflow = "";
+}
+      
+function openDocument(title, file) {
+  document.getElementById("documentTitle").textContent = title;
+
+  document.getElementById("documentViewer").src = file;
+
+  document.getElementById("documentModal")
+    .classList.add("open");
+
+  document.body.style.overflow = "hidden";
+}
+
+function closeDocument() {
+  document.getElementById("documentModal")
+    .classList.remove("open");
+
+  document.getElementById("documentViewer").src = "";
 
   document.body.style.overflow = "";
 }
