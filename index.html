@@ -74,6 +74,22 @@
       .navlinks { width: 100%; justify-content: space-between; }
       .hero-card { padding: 22px; }
     }
+  
+    .creative-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .creative-card{overflow:hidden;padding:0}
+    .creative-art{min-height:175px;display:grid;place-items:center;text-align:center;padding:24px;background:linear-gradient(135deg,#172d48,#40345f)}
+    .creative-art.poster{background:linear-gradient(135deg,#142b43,#1d5260)}
+    .creative-art.layout{background:linear-gradient(135deg,#172d48,#3a4765)}
+    .creative-art.brand{background:linear-gradient(135deg,#20263a,#4a385e)}
+    .art-mark{font-size:2.1rem;font-weight:900;letter-spacing:.12em;color:#f1e7c9}
+    .art-sub{font-size:.7rem;letter-spacing:.2em;color:#d0d8e7;text-transform:uppercase}
+    .creative-copy{padding:20px}
+    .creative-copy h3{margin:5px 0 7px}
+    .creative-copy p{color:var(--muted);margin:0}
+    .design-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;font-weight:850;color:#c3a8ff}
+    .placeholder{font-size:.76rem;color:#c6b6ed;margin-top:12px}
+    @media(max-width:760px){.creative-grid{grid-template-columns:1fr}}
+
   </style>
 </head>
 <body>
@@ -83,7 +99,7 @@
       <div class="navlinks">
         <a href="#tentang">Tentang</a>
         <a href="#keahlian">Keahlian</a>
-        <a href="#proyek">Proyek</a>
+        <a href="#proyek">IT</a><a href="#creative">Design</a>
         <a href="#kontak">Kontak</a>
       </div>
     </nav>
@@ -197,6 +213,36 @@
       </div>
     </section>
 
+
+    <section id="creative">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">04 / Creative Works</div>
+          <h2>Ideas into visual identity.</h2>
+          <p>Ruang untuk menampilkan karya desain grafis: logo, branding, poster, dan layout. Kartu berikut adalah slot portofolio yang bisa kamu ganti dengan gambar karya asli.</p>
+        </div>
+        <div class="creative-grid">
+          <article class="card creative-card">
+            <div class="creative-art brand"><div><div class="art-mark">NOVA</div><div class="art-sub">Brand identity concept</div></div></div>
+            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="placeholder">Slot karya — ganti visual contoh dengan desain logomu.</div></div>
+          </article>
+          <article class="card creative-card">
+            <div class="creative-art poster"><div><div class="art-mark">CREATE<br>YOUR<br>SPACE</div><div class="art-sub">Poster design study</div></div></div>
+            <div class="creative-copy"><div class="design-label">02 · Poster</div><h3>Poster & Promosi</h3><p>Latihan hierarki informasi, komposisi, warna, dan tipografi agar pesan mudah dipahami.</p><div class="placeholder">Slot karya — tambahkan poster buatanmu.</div></div>
+          </article>
+          <article class="card creative-card">
+            <div class="creative-art layout"><div><div class="art-mark">GRID / 01</div><div class="art-sub">Editorial layout</div></div></div>
+            <div class="creative-copy"><div class="design-label">03 · Layout</div><h3>Layout & Editorial</h3><p>Pengaturan elemen, grid, ruang kosong, dan tipografi untuk desain yang terstruktur.</p><div class="placeholder">Slot karya — tambahkan desain layout atau halaman.</div></div>
+          </article>
+          <article class="card creative-card">
+            <div class="creative-art"><div><div class="art-mark">CF ✳</div><div class="art-sub">Visual exploration</div></div></div>
+            <div class="creative-copy"><div class="design-label">04 · Eksplorasi Visual</div><h3>Eksperimen Desain</h3><p>Kumpulan eksplorasi bentuk, simbol, warna, dan gaya visual sebagai proses kreativitas.</p><div class="placeholder">Slot karya — tambahkan karya pilihanmu.</div></div>
+          </article>
+        </div>
+        <div class="note">Tips: tampilkan 3–6 karya terbaik. Untuk setiap karya, tulis tujuan desain, peranmu, tools yang digunakan, dan alasan pilihan visual. Jangan mengaku proyek klien jika sebenarnya proyek latihan.</div>
+      </div>
+    </section>
+
     <section id="dokumentasi">
       <div class="wrap">
         <div class="section-head">
@@ -232,6 +278,6 @@
       </div>
     </section>
   </main>
-  <footer><div class="wrap">© 2026 Cantikania Finata · Personal Portfolio</div></footer>
+  <footer><div class="wrap">© 2026 Cantikania Finata · IT & Creative Portfolio</div></footer>
 </body>
 </html>
