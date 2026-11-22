@@ -102,6 +102,7 @@ PANDUAN EDIT PORTOFOLIO
     .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
     .image-slot { min-height: 175px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg,#172d48,#263e5e); }
     .image-slot img { width: 100%; height: 100%; min-height: 175px; max-height: 280px; object-fit: cover; display: block; }
+    .card:has(.project-image) { overflow: hidden; }
     .project-image { margin: -23px -23px 18px; overflow: hidden; background: #142943; }
     .project-image img { width: 100%; height: 180px; object-fit: cover; display: block; }
     .edit-hint { color: #9fb4cc; font-size: .78rem; margin-top: 8px; }
@@ -273,33 +274,33 @@ PANDUAN EDIT PORTOFOLIO
         </div>
         <div class="grid">
           <article class="card">
-            <div class="project-top"><span class="label">Jaringan</span><span class="tag">Praktik sekolah</span></div>
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/mikrotik.jpg" alt="Dokumentasi praktik MikroTik dan Winbox" onerror="this.parentElement.style.display='none'"></div>
+            <div class="project-top"><span class="label">Jaringan</span><span class="tag">Praktik sekolah</span></div>
             <h3>Konfigurasi MikroTik menggunakan Winbox</h3>
             <p>Mempelajari pengaturan jaringan pada router MikroTik dan memahami hubungan perangkat dalam topologi LAN.</p>
             <div class="taglist"><span class="tag">MikroTik</span><span class="tag">Winbox</span><span class="tag">Topologi LAN</span></div>
           </article>
           <article class="card">
-            <div class="project-top"><span class="label">Server</span><span class="tag">Praktik mandiri</span></div>
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/debian.png" alt="Dokumentasi Debian Server di VirtualBox" onerror="this.parentElement.style.display='none'"></div>
+            <div class="project-top"><span class="label">Server</span><span class="tag">Praktik mandiri</span></div>
             <h3>Instalasi Debian Server di VirtualBox</h3>
             <p>Menyiapkan lingkungan virtual Debian untuk mempelajari administrasi server dan pengujian layanan jaringan.</p>
             <div class="taglist"><span class="tag">Debian 9</span><span class="tag">VirtualBox</span><span class="tag">Linux</span></div>
           </article>
           <article class="card">
-            <div class="project-top"><span class="label">File Sharing</span><span class="tag">Praktik</span></div>
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/ftp.png" alt="Dokumentasi konfigurasi Samba Server" onerror="this.parentElement.style.display='none'"></div>
+            <div class="project-top"><span class="label">File Sharing</span><span class="tag">Praktik</span></div>
             <h3>Konfigurasi FTP Server</h3>
             <p>Mempelajari pembuatan folder berbagi di Debian dan menguji akses dari komputer klien melalui jaringan lokal.</p>
             <div class="taglist"><span class="tag">FTP</span><span class="tag">Debian</span><span class="tag">Windows Client</span></div>
           </article>
           <article class="card">
-            <div class="project-top"><span class="label">Layanan Jaringan</span><span class="tag">Materi praktik</span></div>
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/dns.jpg" alt="Dokumentasi layanan SSH FTP DHCP dan DNS" onerror="this.parentElement.style.display='none'"></div>
+            <div class="project-top"><span class="label">Layanan Jaringan</span><span class="tag">Materi praktik</span></div>
             <h3>Pengenalan SSH, FTP, DHCP, dan DNS</h3>
             <p>Mempelajari fungsi layanan jaringan dan tahapan konfigurasi serta pengujian dasar dalam lingkungan server.</p>
             <div class="taglist"><span class="tag">SSH</span><span class="tag">FTP</span><span class="tag">DHCP</span><span class="tag">DNS</span></div>
