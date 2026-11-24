@@ -178,6 +178,44 @@ PANDUAN EDIT PORTOFOLIO
     }
     @media(max-width: 380px) { .gallery-grid { grid-template-columns: 1fr; } }
 
+    /* Video Editing & Motion */
+    .video-cover { position: relative; }
+    .video-cover img { width:100%; height:100%; min-height:175px; object-fit:cover; }
+    .video-cover-mark { position:absolute; display:grid; place-items:center; width:48px; height:48px; border-radius:50%; color:white; background:#07111fbb; border:1px solid #ffffff66; }
+    .video-gallery-panel { width:min(760px,100%); }
+    .video-project-card { display:flex; align-items:center; gap:16px; width:100%; padding:12px; text-align:left; color:var(--text); font:inherit; cursor:pointer; border:1px solid var(--line); border-radius:14px; background:#10233a; transition:.2s ease; }
+    .video-project-card:hover { border-color:var(--blue); background:#132b47; transform:translateY(-2px); }
+    .video-project-thumb { position:relative; flex:0 0 150px; width:150px; aspect-ratio:16/9; overflow:hidden; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,#172d48,#40345f); }
+    .video-project-thumb img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .video-project-play { position:relative; z-index:1; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; background:#040a12c7; color:white; }
+    .video-project-card-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:4px; }
+    .video-project-card-copy strong { font-size:1rem; line-height:1.35; }
+    .video-project-subtitle { color:var(--muted); font-size:.78rem; }
+    .video-project-card .gallery-hint { margin-top:3px; }
+    .video-project-chevron { color:var(--cyan); font-size:1.3rem; padding:0 5px; }
+    .video-project-detail { margin-top:18px; animation:videoDetailIn .28s ease both; }
+    .video-project-detail[hidden] { display:none; }
+    .video-project-detail video { display:block; width:100%; max-height:430px; aspect-ratio:16/9; object-fit:contain; background:#050a11; border-radius:12px; }
+    .project-description { margin-top:18px; padding:20px; border:1px solid #ffffff1a; border-radius:14px; background:#ffffff08; }
+    .project-description h3 { margin:7px 0 9px; }
+    .project-description > p:not(.gallery-note) { color:var(--muted); line-height:1.75; }
+    .project-info { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:20px; }
+    .project-info div { display:flex; flex-direction:column; gap:5px; min-width:0; }
+    .project-info span { color:var(--muted); font-size:.75rem; }
+    .project-info strong { font-size:.88rem; overflow-wrap:anywhere; }
+    .project-skills { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+    .project-skills span { padding:6px 10px; border:1px solid #294866; border-radius:999px; color:#c6ddf8; background:#102943; font-size:.76rem; }
+    @keyframes videoDetailIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    @media(max-width:520px) {
+      .video-project-card { gap:11px; padding:9px; }
+      .video-project-thumb { flex-basis:112px; width:112px; }
+      .video-project-card-copy strong { font-size:.88rem; }
+      .video-project-subtitle { font-size:.7rem; }
+      .project-description { padding:15px; }
+      .project-info { grid-template-columns:1fr 1fr; }
+    }
+
+
   </style>
 </head>
 <body>
@@ -318,12 +356,12 @@ PANDUAN EDIT PORTOFOLIO
         <div class="section-head">
           <div class="eyebrow">04 / Creative Works</div>
           <h2>Ideas into visual identity.</h2>
-          <p>Ruang untuk menampilkan karya desain grafis: logo, branding, poster, dan layout.</p>
+          <p>Ruang untuk menampilkan eksplorasi desain grafis, video editing, motion, poster, dan karya visual lainnya.</p>
         </div>
         <div class="creative-grid">
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="logoGallery" onclick='openGallery("logoGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("logoGallery");}'>
-            <div class="image-slot"><img src="images/logo.png" alt="Karya logo dan branding" onerror="this.style.display='none'"></div>
-            <div class="creative-copy"><div class="design-label">01 · Logo & Branding</div><h3>Identitas Visual</h3><p>Eksplorasi logo, warna, tipografi, dan penerapan identitas pada media sederhana.</p><div class="gallery-hint">Klik untuk melihat galeri ↗</div></div>
+            <div class="image-slot video-cover"><img src="images/video-thumbnail.jpg" alt="Thumbnail video editing" onerror="this.style.display='none'"><span class="video-cover-mark">▶</span></div>
+            <div class="creative-copy"><div class="design-label">01 · Video Editing & Motion</div><h3>Video Editing & Motion</h3><p>Eksplorasi tipografi, komposisi visual, transisi, dan penyuntingan video.</p><div class="gallery-hint">Klik untuk melihat karya ↗</div></div>
           </article>
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="posterGallery" onclick="openPosterGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPosterGallery();}">
             <div class="image-slot"><img src="poster/creative-art poster.png" alt="Pratinjau karya poster" onerror="this.style.display='none'"></div>
@@ -412,15 +450,51 @@ PANDUAN EDIT PORTOFOLIO
     </div>
 
 <div class="gallery-modal" id="logoGallery" role="dialog" aria-modal="true" aria-labelledby="logoGalleryTitle" onclick='if(event.target===this)closeGallery("logoGallery")'>
-      <div class="gallery-panel">
-        <div class="gallery-header">
-          <div><div class="eyebrow">Creative Works</div><h2 id="logoGalleryTitle">Logo & Branding</h2></div>
-          <button class="gallery-close" type="button" onclick='closeGallery("logoGallery")'>Tutup ✕</button>
+  <div class="gallery-panel video-gallery-panel">
+    <div class="gallery-header">
+      <div><div class="eyebrow">Creative Works / 01</div><h2 id="logoGalleryTitle">Video Editing & Motion</h2></div>
+      <button class="gallery-close" type="button" onclick='closeGallery("logoGallery")'>Tutup ✕</button>
+    </div>
+
+    <button class="video-project-card" type="button" aria-expanded="false"
+      aria-controls="videoProjectDetail" onclick="toggleVideoProject()">
+      <span class="video-project-thumb">
+        <img src="images/thumbnail-1.jpg" alt="" onerror="this.style.display='none'">
+        <span class="video-project-play">▶</span>
+      </span>
+      <span class="video-project-card-copy">
+        <span class="design-label">VIDEO EDITING</span>
+        <strong>Lyric Video — Takkan Terganti by Marcell</strong>
+        <span class="video-project-subtitle">Typography · Visual Composition · Motion</span>
+        <span class="gallery-hint">Klik untuk melihat detail ↗</span>
+      </span>
+      <span class="video-project-chevron" aria-hidden="true">⌄</span>
+    </button>
+
+    <div class="video-project-detail" id="videoProjectDetail" hidden>
+      <video id="portfolioVideo" controls playsinline preload="none" poster="images/video-thumbnail.jpg">
+        <source src="videos/takkan-terganti.mp4" type="video/mp4">
+        Browser kamu tidak mendukung pemutaran video.
+      </video>
+       
+      <div class="project-description">
+        <div class="eyebrow">Project Details</div>
+        <h3>Lyric Video — Takkan Terganti by Marcell</h3>
+        <p>Eksperimen video editing yang menggabungkan tipografi, komposisi visual, transisi, dan permainan warna untuk membangun suasana visual yang ekspresif.</p>
+        <div class="project-info">
+          <div><span>Role</span><strong>Video Editor</strong></div>
+          <div><span>Category</span><strong>Video Editing & Motion</strong></div>
+          <div><span>Tools</span><strong>[Isi aplikasi editing]</strong></div>
         </div>
-        <div class="gallery-grid"><figure class="gallery-item"><img src="images/logo-1.png" alt="Logo & Branding karya 1" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 01</figcaption></figure><figure class="gallery-item"><img src="images/logo-2.png" alt="Logo & Branding karya 2" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 02</figcaption></figure><figure class="gallery-item"><img src="images/logo-3.png" alt="Logo & Branding karya 3" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 03</figcaption></figure><figure class="gallery-item"><img src="images/logo-4.png" alt="Logo & Branding karya 4" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 04</figcaption></figure><figure class="gallery-item"><img src="images/logo-5.png" alt="Logo & Branding karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 05</figcaption></figure><figure class="gallery-item"><img src="images/logo-6.png" alt="Logo & Branding karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Logo & Branding 06</figcaption></figure></div>
-        <p class="gallery-note">Belum ada karya, ditunggu ya ^_^</p>
+        <div class="project-skills">
+          <span>Typography</span><span>Visual Composition</span>
+          <span>Color Grading</span><span>Motion Editing</span>
+        </div>
+        <p class="gallery-note">Personal Creative Project</p>
       </div>
     </div>
+  </div>
+</div>
 <div class="gallery-modal" id="layoutGallery" role="dialog" aria-modal="true" aria-labelledby="layoutGalleryTitle" onclick='if(event.target===this)closeGallery("layoutGallery")'>
       <div class="gallery-panel">
         <div class="gallery-header">
@@ -475,8 +549,31 @@ PANDUAN EDIT PORTOFOLIO
       const gallery = document.getElementById(id);
       if (!gallery) return;
       gallery.classList.remove('open');
+      if (id === 'logoGallery') {
+        const video = document.getElementById('portfolioVideo');
+        const detail = document.getElementById('videoProjectDetail');
+        const card = document.querySelector('.video-project-card');
+        if (video) { video.pause(); video.currentTime = 0; }
+        if (detail) detail.hidden = true;
+        if (card) card.setAttribute('aria-expanded', 'false');
+      }
       if (!document.querySelector('.gallery-modal.open')) document.body.style.overflow = '';
     }
+
+    function toggleVideoProject() {
+      const detail = document.getElementById('videoProjectDetail');
+      const card = document.querySelector('.video-project-card');
+      const video = document.getElementById('portfolioVideo');
+      if (!detail || !card || !video) return;
+      const willOpen = detail.hidden;
+      detail.hidden = !willOpen;
+      card.setAttribute('aria-expanded', String(willOpen));
+      if (!willOpen) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
     function openPosterGallery() { openGallery('posterGallery'); }
     function closePosterGallery() { closeGallery('posterGallery'); }
     document.addEventListener('keydown', function(event) {
