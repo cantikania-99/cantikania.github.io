@@ -123,7 +123,8 @@ PANDUAN EDIT PORTOFOLIO
     .section-head p { color: var(--muted); margin: 0; max-width: 700px; }
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
      @media (max-width: 650px) {
-    .grid {grid-template-columns: 1fr;} }
+    .grid {grid-template-columns: 1fr;}
+     }
     .card { position: relative; background: linear-gradient(145deg, rgba(15,34,56,.95), rgba(10,24,41,.95)); border: 1px solid var(--line); border-radius: 16px; padding: 23px; transition: border-color .3s ease, box-shadow .3s ease; will-change: transform; }
     .card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(116,212,232,.11), transparent 60%); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
     .card:hover { border-color: rgba(101,169,255,.45); box-shadow: 0 18px 42px rgba(2,10,22,.45); }
@@ -268,6 +269,7 @@ PANDUAN EDIT PORTOFOLIO
     .project-info strong { font-size:.88rem; overflow-wrap:anywhere; }
     .project-skills { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
     .project-skills span { padding:6px 10px; border:1px solid #294866; border-radius:999px; color:#c6ddf8; background:#102943; font-size:.76rem; }
+    .project-actions { margin-top:20px; }
     @keyframes videoDetailIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     @media(max-width:520px) {
       .video-project-card { gap:11px; padding:9px; }
@@ -560,11 +562,15 @@ PANDUAN EDIT PORTOFOLIO
         <div class="project-info">
           <div><span>Role</span><strong>Video Editor</strong></div>
           <div><span>Category</span><strong>Video Editing & Motion</strong></div>
-          <div><span>Tools</span><strong>Alight Motion</strong></div>
+          <div><span>Tools</span><strong>[Alight Motion]</strong></div>
         </div>
         <div class="project-skills">
           <span>Typography</span><span>Visual Composition</span>
           <span>Color Grading</span><span>Motion Editing</span>
+        </div>
+        <!-- EDIT: Ganti tanda # dengan link preset Alight Motion milikmu (contoh: https://alight.link/xxxx). -->
+        <div class="actions project-actions">
+          <a class="btn primary" href="https://alightcreative.com/am/share/u/yw94kySspcXbiU7cve0H2vGchNn1/p/4cii7So3jS-6a9c054428c6748d" target="_blank" rel="noopener">Preset Alight Motion ↗</a>
         </div>
         <p class="gallery-note">Note: Editing dilakukan secara mandiri untuk keperluan portofolio. Materi visual dan audio yang digunakan dapat berasal dari pihak ketiga. Konten ini bukan rilis resmi dan tidak dimaksudkan untuk mengklaim hak cipta atas materi aslinya.</p>
       </div>
