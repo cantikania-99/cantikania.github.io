@@ -37,35 +37,86 @@ PANDUAN EDIT PORTOFOLIO
       --max: 1080px;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
     body {
+      position: relative;
+      overflow-x: hidden;
       margin: 0; background: radial-gradient(ellipse at 80% 0%, #10294a 0%, transparent 38%), var(--bg);
       color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       line-height: 1.65;
     }
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-ambient::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(116, 212, 232, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at 50% 25%, black 15%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 25%, black 15%, transparent 75%);
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .34;
+      will-change: transform;
+    }
+    .bg-orb-1 {
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(101, 169, 255, .55), transparent 70%);
+    }
+    .bg-orb-2 {
+      width: 360px;
+      height: 360px;
+      bottom: 8%;
+      left: -120px;
+      background: radial-gradient(circle, rgba(116, 212, 232, .38), transparent 70%);
+    }
     a { color: inherit; text-decoration: none; }
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
-    header { position: sticky; top: 0; z-index: 10; background: rgba(7,17,31,.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(101,169,255,.13); }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(7,17,31,.82); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(101,169,255,.13); transition: background .3s ease, box-shadow .3s ease; }
+    header.is-scrolled { background: rgba(7,17,31,.94); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+    .scroll-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--blue), #c3a8ff); transform: scaleX(0); transform-origin: left center; will-change: transform; }
     nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { font-weight: 800; letter-spacing: .04em; }
+    .brand { font-weight: 800; letter-spacing: .04em; display: inline-flex; align-items: center; }
     .brand span { color: var(--blue); }
     .navlinks { display: flex; gap: 24px; color: var(--muted); font-size: .92rem; }
-    .navlinks a:hover, .text-link:hover { color: var(--cyan); }
+    .navlinks a { position: relative; padding: 4px 0; transition: color .25s ease; }
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--blue)); transform: scaleX(0); transform-origin: left center; transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
+    .navlinks a:hover, .navlinks a.is-active, .text-link:hover { color: var(--cyan); }
+    .navlinks a:hover::after, .navlinks a.is-active::after { transform: scaleX(1); }
     .hero { padding: 100px 0 84px; display: grid; grid-template-columns: 1.35fr .65fr; gap: 52px; align-items: center; }
     .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: .18em; font-size: .76rem; font-weight: 800; }
     h1 { font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1.04; letter-spacing: -.055em; margin: 16px 0 20px; }
     h1 span { color: var(--blue); }
     .lead { color: var(--muted); font-size: 1.12rem; max-width: 650px; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 18px; border-radius: 10px; border: 1px solid var(--line); font-weight: 700; font-size: .93rem; }
-    .btn.primary { background: linear-gradient(135deg, #438fe9, #3974c8); border-color: transparent; color: white; }
-    .btn:hover { transform: translateY(-2px); transition: .2s ease; }
-    .hero-card { background: linear-gradient(155deg, rgba(20,47,77,.95), rgba(10,25,43,.95)); border: 1px solid #294969; border-radius: 22px; padding: 28px; box-shadow: 0 24px 70px #0005; }
-    .avatar { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: #173b60; color: var(--cyan); font-size: 1.6rem; font-weight: 900; margin-bottom: 22px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 18px; border-radius: 10px; border: 1px solid var(--line); font-weight: 700; font-size: .93rem; cursor: pointer; background: rgba(16,35,58,.45); color: var(--text); transition: border-color .25s ease, box-shadow .25s ease, background .25s ease; will-change: transform; }
+    .btn.primary { background: linear-gradient(135deg, #438fe9, #3974c8); border-color: transparent; color: white; box-shadow: 0 8px 24px rgba(67,143,233,.25); }
+    .btn:hover { border-color: rgba(116,212,232,.55); box-shadow: 0 10px 26px rgba(10,25,43,.45); }
+    .btn.primary:hover { box-shadow: 0 12px 30px rgba(67,143,233,.42); }
+    .hero-card { position: relative; background: linear-gradient(155deg, rgba(20,47,77,.95), rgba(10,25,43,.95)); border: 1px solid #294969; border-radius: 22px; padding: 28px; box-shadow: 0 24px 70px #0005; overflow: hidden; will-change: transform; }
+    .hero-card::after { content: ""; position: absolute; inset: -40% auto auto -40%; width: 180%; height: 180%; background: radial-gradient(circle at 30% 25%, rgba(116,212,232,.09), transparent 45%); pointer-events: none; }
+    .avatar { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: #173b60; color: var(--cyan); font-size: 1.6rem; font-weight: 900; margin-bottom: 22px; border: 1px solid rgba(116,212,232,.25); }
     .hero-card h2 { margin: 0 0 4px; font-size: 1.25rem; }
     .hero-card p { color: var(--muted); margin: 0; }
     .status { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; color: #bfe9dc; font-size: .84rem; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #5ad6a0; box-shadow: 0 0 12px #5ad6a0; }
+    .dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #5ad6a0; box-shadow: 0 0 12px #5ad6a0; }
+    .dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid #5ad6a0; animation: pulseDot 2.2s cubic-bezier(.22,1,.36,1) infinite; }
+    @keyframes pulseDot { 0% { transform: scale(.8); opacity: .85; } 70%, 100% { transform: scale(2.1); opacity: 0; } }
     section { padding: 66px 0; border-top: 1px solid rgba(101,169,255,.12); }
     .section-head { margin-bottom: 28px; }
     .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 7px 0; letter-spacing: -.035em; }
@@ -74,11 +125,15 @@ PANDUAN EDIT PORTOFOLIO
      @media (max-width: 650px) {
     .grid {grid-template-columns: 1fr;}
      }
-    .card { background: linear-gradient(145deg, rgba(15,34,56,.95), rgba(10,24,41,.95)); border: 1px solid var(--line); border-radius: 16px; padding: 23px; }
+    .card { position: relative; background: linear-gradient(145deg, rgba(15,34,56,.95), rgba(10,24,41,.95)); border: 1px solid var(--line); border-radius: 16px; padding: 23px; transition: border-color .3s ease, box-shadow .3s ease; will-change: transform; }
+    .card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(116,212,232,.11), transparent 60%); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+    .card:hover { border-color: rgba(101,169,255,.45); box-shadow: 0 18px 42px rgba(2,10,22,.45); }
+    .card:hover::before { opacity: 1; }
     .card h3 { margin: 0 0 9px; font-size: 1.08rem; }
     .card p { color: var(--muted); margin: 0; }
     .taglist { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
-    .tag { font-size: .78rem; color: #c6ddf8; border: 1px solid #294866; background: #102943; border-radius: 999px; padding: 5px 10px; }
+    .tag { font-size: .78rem; color: #c6ddf8; border: 1px solid #294866; background: #102943; border-radius: 999px; padding: 5px 10px; transition: border-color .25s ease, color .25s ease, background .25s ease; will-change: transform; }
+    .tag:hover { border-color: var(--cyan); color: white; background: #153558; }
     .project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
     .label { color: var(--cyan); font-size: .74rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
     .note { margin-top: 20px; border-left: 3px solid var(--blue); padding: 12px 16px; background: rgba(31,73,116,.22); color: var(--muted); border-radius: 0 10px 10px 0; }
@@ -101,10 +156,12 @@ PANDUAN EDIT PORTOFOLIO
     .avatar { position: relative; overflow: hidden; }
     .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
     .image-slot { min-height: 175px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg,#172d48,#263e5e); }
-    .image-slot img { width: 100%; height: 100%; min-height: 175px; max-height: 280px; object-fit: cover; display: block; }
+    .image-slot img { width: 100%; height: 100%; min-height: 175px; max-height: 280px; object-fit: cover; display: block; transition: transform .55s cubic-bezier(.22, 1, .36, 1); }
     .card:has(.project-image) { overflow: hidden; }
     .project-image { margin: -23px -23px 18px; overflow: hidden; background: #142943; }
-    .project-image img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .project-image img { width: 100%; height: 180px; object-fit: cover; display: block; transition: transform .55s cubic-bezier(.22, 1, .36, 1); }
+    .card:hover .project-image img, .creative-card:hover .image-slot img { transform: scale(1.045); }
+    .creative-card:hover .video-cover-mark { transform: scale(1.1); border-color: var(--cyan); background: rgba(16, 41, 67, .9); }
     .edit-hint { color: #9fb4cc; font-size: .78rem; margin-top: 8px; }
     .creative-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .creative-card{overflow:hidden;padding:0}
@@ -181,7 +238,7 @@ PANDUAN EDIT PORTOFOLIO
     /* Video Editing & Motion */
     .video-cover { position: relative; }
     .video-cover img { width:100%; height:100%; min-height:175px; object-fit:cover; }
-    .video-cover-mark { position:absolute; display:grid; place-items:center; width:48px; height:48px; border-radius:50%; color:white; background:#07111fbb; border:1px solid #ffffff66; }
+    .video-cover-mark { position:absolute; display:grid; place-items:center; width:48px; height:48px; border-radius:50%; color:white; background:#07111fbb; border:1px solid #ffffff66; transition: transform .3s cubic-bezier(.22, 1, .36, 1), border-color .3s ease, background .3s ease; }
     .video-gallery-panel { width:min(760px,100%); }
     .video-project-card { display:flex; align-items:center; gap:16px; width:100%; padding:12px; text-align:left; color:var(--text); font:inherit; cursor:pointer; border:1px solid var(--line); border-radius:14px; background:#10233a; transition:.2s ease; }
     .video-project-card:hover { border-color:var(--blue); background:#132b47; transform:translateY(-2px); }
@@ -216,9 +273,17 @@ PANDUAN EDIT PORTOFOLIO
     }
 
 
+    @media (prefers-reduced-motion: reduce) {
+      .dot::after { animation: none; }
+      .card, .btn, .tag, .project-image img, .image-slot img, .video-cover-mark { transition: none !important; }
+    }
   </style>
 </head>
 <body>
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
   <header>
     <nav class="wrap" aria-label="Navigasi utama">
       <a class="brand" href="#beranda">CF<span>.</span></a>
@@ -231,6 +296,7 @@ PANDUAN EDIT PORTOFOLIO
         <a href="#kontak">Kontak</a>
       </div>
     </nav>
+    <div class="scroll-progress" aria-hidden="true"></div>
   </header>
 
   <main>
@@ -360,7 +426,10 @@ PANDUAN EDIT PORTOFOLIO
         </div>
         <div class="creative-grid">
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="logoGallery" onclick='openGallery("logoGallery")' onkeydown='if(event.key==="Enter"||event.key===" "){event.preventDefault();openGallery("logoGallery");}'>
-            <div class="image-slot video-cover"><img src="images/thumbnail-1.png" alt="Thumbnail video editing" onerror="this.style.display='none'">
+            <div class="image-slot video-cover">
+              <img src="images/thumbnail-1.png" alt="Thumbnail video editing" onerror="this.style.display='none'">
+              <span class="video-cover-mark" aria-hidden="true">▶</span>
+            </div>
             <div class="creative-copy"><div class="design-label">01 · Video Editing & Motion</div><h3>Video Editing & Motion</h3><p>Eksplorasi tipografi, komposisi visual, transisi, dan penyuntingan video.</p><div class="gallery-hint">Klik untuk melihat karya ↗</div></div>
           </article>
           <article class="card creative-card gallery-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="posterGallery" onclick="openPosterGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPosterGallery();}">
@@ -388,8 +457,6 @@ PANDUAN EDIT PORTOFOLIO
           <p>Saya juga mengembangkan kemampuan menyusun jobsheet, laporan praktikum, dan catatan troubleshooting agar proses konfigurasi mudah dipahami serta dapat ditinjau kembali.</p>
         </div>
         <div class="grid">
-    </article>
-           
           <article class="card">
              <h3>Instalasi Linux Debian</h3>
              <p>Dokumentasi Persiapan VM dan langkah instalasi Debian di VirtualBox.</p>
@@ -433,7 +500,7 @@ PANDUAN EDIT PORTOFOLIO
 
     <!-- GALERI POSTER: ganti nama file dan judul sesuai karya yang kamu upload ke folder images -->
     <div class="gallery-modal" id="posterGallery" role="dialog" aria-modal="true" aria-labelledby="posterGalleryTitle" onclick="if(event.target===this)closePosterGallery()">
-      <div class="gallery-panel">
+      <div class="gallery-panel" data-lenis-prevent>
         <div class="gallery-header">
           <div>
             <div class="eyebrow">Creative Works / 02</div>
@@ -454,7 +521,7 @@ PANDUAN EDIT PORTOFOLIO
     </div>
 
 <div class="gallery-modal" id="logoGallery" role="dialog" aria-modal="true" aria-labelledby="logoGalleryTitle" onclick='if(event.target===this)closeGallery("logoGallery")'>
-  <div class="gallery-panel video-gallery-panel">
+  <div class="gallery-panel video-gallery-panel" data-lenis-prevent>
     <div class="gallery-header">
       <div><div class="eyebrow">Creative Works / 01</div><h2 id="logoGalleryTitle">Video Editing & Motion</h2></div>
       <button class="gallery-close" type="button" onclick='closeGallery("logoGallery")'>Tutup ✕</button>
@@ -539,62 +606,14 @@ PANDUAN EDIT PORTOFOLIO
   </main>
   <footer><div class="wrap">© 2026 Cantikania Finata · IT & Creative Portfolio</div></footer>
 
-  <script>
-    function openGallery(id) {
-      const gallery = document.getElementById(id);
-      if (!gallery) return;
-      gallery.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      const closeButton = gallery.querySelector('.gallery-close');
-      if (closeButton) closeButton.focus();
-    }
-    function closeGallery(id) {
-      const gallery = document.getElementById(id);
-      if (!gallery) return;
-      gallery.classList.remove('open');
-      if (id === 'logoGallery') {
-        const video = document.getElementById('portfolioVideo');
-        const detail = document.getElementById('videoProjectDetail');
-        const card = document.querySelector('.video-project-card');
-        if (video) { video.pause(); video.currentTime = 0; }
-        if (detail) detail.hidden = true;
-        if (card) card.setAttribute('aria-expanded', 'false');
-      }
-      if (!document.querySelector('.gallery-modal.open')) document.body.style.overflow = '';
-    }
-
-    function toggleVideoProject() {
-      const detail = document.getElementById('videoProjectDetail');
-      const card = document.querySelector('.video-project-card');
-      const video = document.getElementById('portfolioVideo');
-      if (!detail || !card || !video) return;
-      const willOpen = detail.hidden;
-      detail.hidden = !willOpen;
-      card.setAttribute('aria-expanded', String(willOpen));
-      if (!willOpen) {
-        video.pause();
-        video.currentTime = 0;
-      }
-    }
-
-    function openPosterGallery() { openGallery('posterGallery'); }
-    function closePosterGallery() { closeGallery('posterGallery'); }
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        document.querySelectorAll('.gallery-modal.open').forEach(function(gallery) {
-          closeGallery(gallery.id);
-        });
-      }
-    });
-  </script>
 <!-- POP-UP DOKUMENTASI -->
-<div class="gallery-modal" id="documentModal">
-  <div class="gallery-panel">
+<div class="gallery-modal" id="documentModal" role="dialog" aria-modal="true" aria-labelledby="documentTitle" onclick="if(event.target===this)closeDocument()">
+  <div class="gallery-panel" data-lenis-prevent>
 
     <div class="gallery-header">
       <h2 id="documentTitle">Dokumentasi</h2>
 
-      <button class="gallery-close"
+      <button class="gallery-close" type="button"
         onclick="closeDocument()">
         Tutup ✕
       </button>
@@ -608,40 +627,384 @@ PANDUAN EDIT PORTOFOLIO
 
   </div>
 </div>
-   <script>
-function openDnsJobsheet() {
-  document.getElementById("dnsJobsheet")
-    .classList.add("open");
 
-  document.body.style.overflow = "hidden";
-}
+  <!-- Libraries: Lenis (Smooth Scroll), GSAP + ScrollTrigger, Motion -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11.15.0/dist/motion.js"></script>
 
-function closeDnsJobsheet() {
-  document.getElementById("dnsJobsheet")
-    .classList.remove("open");
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lenisInstance = null;
 
-  document.body.style.overflow = "";
-}
-      
-function openDocument(title, file) {
-  document.getElementById("documentTitle").textContent = title;
+    function motionSpring(el, keyframes, opts = {}) {
+      if (prefersReducedMotion || !el || !window.Motion || typeof window.Motion.animate !== 'function') return null;
+      const { stiffness = 360, damping = 26, delay = 0, duration = 0.45 } = opts;
+      if (typeof window.Motion.spring === 'function') {
+        return window.Motion.animate(el, keyframes, {
+          easing: window.Motion.spring({ stiffness, damping }),
+          delay
+        });
+      }
+      return window.Motion.animate(el, keyframes, {
+        type: 'spring',
+        stiffness,
+        damping,
+        delay,
+        duration
+      });
+    }
 
-  document.getElementById("documentViewer").src = file;
+    function openGallery(id) {
+      const gallery = document.getElementById(id);
+      if (!gallery) return;
+      gallery.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (lenisInstance) lenisInstance.stop();
 
-  document.getElementById("documentModal")
-    .classList.add("open");
+      const panel = gallery.querySelector('.gallery-panel');
+      if (panel) {
+        motionSpring(panel, { opacity: [0, 1], y: [24, 0], scale: [0.965, 1] }, { stiffness: 340, damping: 27 });
+      }
+      if (id === 'posterGallery') {
+        gallery.querySelectorAll('.gallery-item').forEach(function(item, index) {
+          motionSpring(item, { opacity: [0, 1], y: [18, 0], scale: [0.97, 1] }, {
+            stiffness: 320,
+            damping: 26,
+            delay: 0.05 + index * 0.045
+          });
+        });
+      }
+      const closeButton = gallery.querySelector('.gallery-close');
+      if (closeButton) closeButton.focus();
+    }
 
-  document.body.style.overflow = "hidden";
-}
+    function closeGallery(id) {
+      const gallery = document.getElementById(id);
+      if (!gallery) return;
+      gallery.classList.remove('open');
+      if (id === 'logoGallery') {
+        const video = document.getElementById('portfolioVideo');
+        const detail = document.getElementById('videoProjectDetail');
+        const card = document.querySelector('.video-project-card');
+        if (video) { video.pause(); video.currentTime = 0; }
+        if (detail) detail.hidden = true;
+        if (card) card.setAttribute('aria-expanded', 'false');
+      }
+      if (!document.querySelector('.gallery-modal.open')) {
+        document.body.style.overflow = '';
+        if (lenisInstance) lenisInstance.start();
+      }
+    }
 
-function closeDocument() {
-  document.getElementById("documentModal")
-    .classList.remove("open");
+    function toggleVideoProject() {
+      const detail = document.getElementById('videoProjectDetail');
+      const card = document.querySelector('.video-project-card');
+      const video = document.getElementById('portfolioVideo');
+      if (!detail || !card || !video) return;
+      const willOpen = detail.hidden;
+      detail.hidden = !willOpen;
+      card.setAttribute('aria-expanded', String(willOpen));
+      if (willOpen) {
+        motionSpring(detail, { opacity: [0, 1], y: [16, 0] }, { stiffness: 320, damping: 26 });
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
 
-  document.getElementById("documentViewer").src = "";
+    function openPosterGallery() { openGallery('posterGallery'); }
+    function closePosterGallery() { closeGallery('posterGallery'); }
 
-  document.body.style.overflow = "";
-}
-</script>
+    function openDnsJobsheet() {
+      openGallery('dnsJobsheet');
+    }
+
+    function closeDnsJobsheet() {
+      closeGallery('dnsJobsheet');
+    }
+
+    function openDocument(title, file) {
+      document.getElementById('documentTitle').textContent = title;
+      document.getElementById('documentViewer').src = file;
+      const modal = document.getElementById('documentModal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (lenisInstance) lenisInstance.stop();
+      const panel = modal.querySelector('.gallery-panel');
+      if (panel) {
+        motionSpring(panel, { opacity: [0, 1], y: [24, 0], scale: [0.965, 1] }, { stiffness: 340, damping: 27 });
+      }
+    }
+
+    function closeDocument() {
+      const modal = document.getElementById('documentModal');
+      modal.classList.remove('open');
+      document.getElementById('documentViewer').src = '';
+      if (!document.querySelector('.gallery-modal.open')) {
+        document.body.style.overflow = '';
+        if (lenisInstance) lenisInstance.start();
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.gallery-modal.open').forEach(function(modal) {
+          if (modal.id === 'documentModal') {
+            closeDocument();
+          } else {
+            closeGallery(modal.id);
+          }
+        });
+      }
+    });
+
+    (function initLivePortfolio() {
+      const headerEl = document.querySelector('header');
+      const navLinks = Array.from(document.querySelectorAll('.navlinks a[href^="#"]'));
+
+      // 1. Lenis Smooth Scroll + Header Scroll State + Anchor Navigation
+      if (!prefersReducedMotion && typeof window.Lenis === 'function') {
+        lenisInstance = new window.Lenis({
+          duration: 1.15,
+          easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+          smoothWheel: true,
+          wheelMultiplier: 0.95
+        });
+
+        lenisInstance.on('scroll', function(e) {
+          if (headerEl) headerEl.classList.toggle('is-scrolled', e.scroll > 20);
+          if (window.ScrollTrigger) window.ScrollTrigger.update();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+          anchor.addEventListener('click', function(ev) {
+            const href = anchor.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (!target) return;
+            ev.preventDefault();
+            lenisInstance.scrollTo(target, { offset: -74 });
+          });
+        });
+
+        if (!window.gsap) {
+          function fallbackRaf(time) {
+            lenisInstance.raf(time);
+            requestAnimationFrame(fallbackRaf);
+          }
+          requestAnimationFrame(fallbackRaf);
+        }
+      } else {
+        window.addEventListener('scroll', function() {
+          if (headerEl) headerEl.classList.toggle('is-scrolled', window.scrollY > 20);
+        }, { passive: true });
+      }
+
+      // 2. GSAP + ScrollTrigger (Hero choreography, scroll reveals, progress bar, parallax)
+      if (!prefersReducedMotion && window.gsap) {
+        const gsap = window.gsap;
+        if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+
+        if (lenisInstance) {
+          gsap.ticker.add(function(time) {
+            lenisInstance.raf(time * 1000);
+          });
+          gsap.ticker.lagSmoothing(0);
+        }
+
+        // Scroll progress bar
+        const progressEl = document.querySelector('.scroll-progress');
+        if (progressEl && window.ScrollTrigger) {
+          gsap.to(progressEl, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 0.2
+            }
+          });
+        }
+
+        // Ambient background orbs drift
+        gsap.to('.bg-orb-1', {
+          x: -36,
+          y: 28,
+          scale: 1.08,
+          duration: 7.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+        gsap.to('.bg-orb-2', {
+          x: 34,
+          y: -24,
+          scale: 1.06,
+          duration: 9,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+
+        // Hero entrance timeline
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        heroTl
+          .from('.hero .eyebrow', { y: 16, opacity: 0, duration: 0.55, clearProps: 'transform,opacity' })
+          .from('.hero h1', { y: 26, opacity: 0, duration: 0.72, clearProps: 'transform,opacity' }, '-=0.35')
+          .from('.hero .lead', { y: 20, opacity: 0, duration: 0.65, clearProps: 'transform,opacity' }, '-=0.45')
+          .from('.hero .actions .btn', { y: 16, opacity: 0, duration: 0.5, stagger: 0.09, clearProps: 'transform,opacity' }, '-=0.4')
+          .from('.hero-card', { y: 30, opacity: 0, scale: 0.96, duration: 0.75, clearProps: 'transform,opacity' }, '-=0.55');
+
+        if (window.ScrollTrigger) {
+          // Subtle parallax on hero card during scroll
+          gsap.to('.hero-card', {
+            y: -22,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#beranda',
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 0.8
+            }
+          });
+
+          // Section headers reveal
+          gsap.utils.toArray('.section-head').forEach(function(head) {
+            gsap.from(head.children, {
+              y: 22,
+              opacity: 0,
+              duration: 0.65,
+              stagger: 0.08,
+              ease: 'power3.out',
+              clearProps: 'transform,opacity',
+              scrollTrigger: {
+                trigger: head,
+                start: 'top 86%',
+                once: true
+              }
+            });
+          });
+
+          // Grid cards staggered reveal
+          gsap.utils.toArray('.grid, .creative-grid').forEach(function(grid) {
+            const cards = grid.querySelectorAll('.card');
+            if (!cards.length) return;
+            gsap.from(cards, {
+              y: 28,
+              opacity: 0,
+              scale: 0.98,
+              duration: 0.65,
+              stagger: 0.1,
+              ease: 'power3.out',
+              clearProps: 'transform,opacity',
+              scrollTrigger: {
+                trigger: grid,
+                start: 'top 84%',
+                once: true
+              }
+            });
+          });
+
+          // Notes & contact banner reveal
+          gsap.utils.toArray('.note, #kontak .contact').forEach(function(el) {
+            gsap.from(el, {
+              y: 18,
+              opacity: 0,
+              duration: 0.6,
+              ease: 'power2.out',
+              clearProps: 'transform,opacity',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 88%',
+                once: true
+              }
+            });
+          });
+
+          // Active nav link highlight by section
+          const sections = ['beranda', 'tentang', 'keahlian', 'proyek', 'creative', 'dokumentasi', 'kontak'];
+          sections.forEach(function(id) {
+            const sec = document.getElementById(id);
+            if (!sec) return;
+            window.ScrollTrigger.create({
+              trigger: sec,
+              start: 'top 42%',
+              end: 'bottom 42%',
+              onToggle: function(self) {
+                if (!self.isActive) return;
+                navLinks.forEach(function(link) {
+                  link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+                });
+              }
+            });
+          });
+        }
+      }
+
+      // 3. Motion (Spring tactile hover/press micro-interactions + card spotlight)
+      if (!prefersReducedMotion) {
+        document.querySelectorAll('.btn').forEach(function(btn) {
+          btn.addEventListener('pointerenter', function() {
+            motionSpring(btn, { y: -2, scale: 1.025 }, { stiffness: 420, damping: 22 });
+          });
+          btn.addEventListener('pointerleave', function() {
+            motionSpring(btn, { y: 0, scale: 1 }, { stiffness: 360, damping: 24 });
+          });
+          btn.addEventListener('pointerdown', function() {
+            motionSpring(btn, { y: 0, scale: 0.96 }, { stiffness: 520, damping: 26 });
+          });
+          btn.addEventListener('pointerup', function() {
+            motionSpring(btn, { y: -2, scale: 1.02 }, { stiffness: 420, damping: 22 });
+          });
+        });
+
+        document.querySelectorAll('.tag, .project-skills span').forEach(function(pill) {
+          pill.addEventListener('pointerenter', function() {
+            motionSpring(pill, { y: -2, scale: 1.05 }, { stiffness: 450, damping: 20 });
+          });
+          pill.addEventListener('pointerleave', function() {
+            motionSpring(pill, { y: 0, scale: 1 }, { stiffness: 360, damping: 24 });
+          });
+        });
+
+        const brand = document.querySelector('.brand');
+        if (brand) {
+          brand.addEventListener('pointerenter', function() {
+            motionSpring(brand, { scale: 1.06 }, { stiffness: 420, damping: 18 });
+          });
+          brand.addEventListener('pointerleave', function() {
+            motionSpring(brand, { scale: 1 }, { stiffness: 360, damping: 22 });
+          });
+        }
+
+        const avatar = document.querySelector('.avatar');
+        if (avatar) {
+          avatar.addEventListener('pointerenter', function() {
+            motionSpring(avatar, { scale: 1.06, rotate: -2 }, { stiffness: 380, damping: 20 });
+          });
+          avatar.addEventListener('pointerleave', function() {
+            motionSpring(avatar, { scale: 1, rotate: 0 }, { stiffness: 340, damping: 22 });
+          });
+        }
+
+        document.querySelectorAll('.card').forEach(function(card) {
+          card.addEventListener('pointermove', function(ev) {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (ev.clientX - rect.left) + 'px');
+            card.style.setProperty('--my', (ev.clientY - rect.top) + 'px');
+          });
+          card.addEventListener('pointerenter', function() {
+            motionSpring(card, { y: -4 }, { stiffness: 340, damping: 24 });
+          });
+          card.addEventListener('pointerleave', function() {
+            motionSpring(card, { y: 0 }, { stiffness: 300, damping: 25 });
+          });
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
