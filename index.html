@@ -90,7 +90,7 @@ PANDUAN EDIT PORTOFOLIO
     header { position: sticky; top: 0; z-index: 20; background: rgba(7,17,31,.82); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(101,169,255,.13); transition: background .3s ease, box-shadow .3s ease; }
     header.is-scrolled { background: rgba(7,17,31,.94); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
     .scroll-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--blue), #c3a8ff); transform: scaleX(0); transform-origin: left center; will-change: transform; }
-    nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; }
     .brand { font-weight: 800; letter-spacing: .04em; display: inline-flex; align-items: center; }
     .brand span { color: var(--blue); }
     .navlinks { display: flex; gap: 24px; color: var(--muted); font-size: .92rem; }
@@ -98,6 +98,13 @@ PANDUAN EDIT PORTOFOLIO
     .navlinks a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--blue)); transform: scaleX(0); transform-origin: left center; transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
     .navlinks a:hover, .navlinks a.is-active, .text-link:hover { color: var(--cyan); }
     .navlinks a:hover::after, .navlinks a.is-active::after { transform: scaleX(1); }
+    .nav-toggle { display: none; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: #10233a; color: var(--text); cursor: pointer; padding: 0; transition: border-color .25s ease, background .25s ease; }
+    .nav-toggle:hover { border-color: var(--cyan); background: #163354; }
+    .nav-toggle-bars { display: flex; flex-direction: column; gap: 5px; width: 18px; }
+    .nav-toggle-bars span { display: block; height: 2px; width: 100%; background: currentColor; border-radius: 999px; transition: transform .25s ease, opacity .2s ease; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .hero { padding: 100px 0 84px; display: grid; grid-template-columns: 1.35fr .65fr; gap: 52px; align-items: center; }
     .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: .18em; font-size: .76rem; font-weight: 800; }
     h1 { font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1.04; letter-spacing: -.055em; margin: 16px 0 20px; }
@@ -108,8 +115,12 @@ PANDUAN EDIT PORTOFOLIO
     .btn.primary { background: linear-gradient(135deg, #438fe9, #3974c8); border-color: transparent; color: white; box-shadow: 0 8px 24px rgba(67,143,233,.25); }
     .btn:hover { border-color: rgba(116,212,232,.55); box-shadow: 0 10px 26px rgba(10,25,43,.45); }
     .btn.primary:hover { box-shadow: 0 12px 30px rgba(67,143,233,.42); }
-    .hero-card { position: relative; background: linear-gradient(155deg, rgba(20,47,77,.95), rgba(10,25,43,.95)); border: 1px solid #294969; border-radius: 22px; padding: 28px; box-shadow: 0 24px 70px #0005; overflow: hidden; will-change: transform; }
+    .hero-card { position: relative; background: linear-gradient(155deg, rgba(20,47,77,.95), rgba(10,25,43,.95)); border: 1px solid #294969; border-radius: 22px; padding: 28px; box-shadow: 0 24px 70px #0005; overflow: hidden; will-change: transform; transform-style: preserve-3d; transition: border-color .3s ease, box-shadow .3s ease; }
+    .hero-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(116,212,232,.14), transparent 60%); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+    .hero-card:hover { border-color: rgba(116,212,232,.48); box-shadow: 0 28px 80px rgba(0, 0, 0, .55); }
+    .hero-card:hover::before { opacity: 1; }
     .hero-card::after { content: ""; position: absolute; inset: -40% auto auto -40%; width: 180%; height: 180%; background: radial-gradient(circle at 30% 25%, rgba(116,212,232,.09), transparent 45%); pointer-events: none; }
+    .hero-card .avatar, .hero-card h2, .hero-card p, .hero-card .status { transform: translateZ(18px); }
     .avatar { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: #173b60; color: var(--cyan); font-size: 1.6rem; font-weight: 900; margin-bottom: 22px; border: 1px solid rgba(116,212,232,.25); }
     .hero-card h2 { margin: 0 0 4px; font-size: 1.25rem; }
     .hero-card p { color: var(--muted); margin: 0; }
@@ -145,16 +156,36 @@ PANDUAN EDIT PORTOFOLIO
       .navlinks { gap: 13px; font-size: .8rem; }
       .grid { grid-template-columns: 1fr; }
     }
+    @media (max-width: 640px) {
+      .nav-toggle { display: inline-flex; }
+      .navlinks {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 4px;
+        padding: 12px;
+        background: rgba(13, 27, 45, .98);
+        border: 1px solid #294969;
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, .55);
+        font-size: .95rem;
+      }
+      .navlinks.is-open { display: flex; }
+      .navlinks a { padding: 10px 12px; border-radius: 10px; }
+      .navlinks a::after { display: none; }
+      .navlinks a:hover, .navlinks a.is-active { background: rgba(101, 169, 255, .12); }
+    }
     @media (max-width: 460px) {
       .wrap { width: min(100% - 28px, var(--max)); }
-      nav { align-items: flex-start; padding: 16px 0; flex-direction: column; gap: 10px; }
-      .navlinks { width: 100%; justify-content: space-between; }
       .hero-card { padding: 22px; }
     }
   
     /* EDIT: Tampilan gambar portofolio */
     .avatar { position: relative; overflow: hidden; }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
+    .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
     .image-slot { min-height: 175px; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg,#172d48,#263e5e); }
     .image-slot img { width: 100%; height: 100%; min-height: 175px; max-height: 280px; object-fit: cover; display: block; transition: transform .55s cubic-bezier(.22, 1, .36, 1); }
     .card:has(.project-image) { overflow: hidden; }
@@ -218,6 +249,8 @@ PANDUAN EDIT PORTOFOLIO
     }
     .gallery-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
     .gallery-header h2 { margin: 0; font-size: 1.5rem; }
+    .gallery-header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .gallery-header-actions .btn { padding: 8px 13px; font-size: .85rem; }
     .gallery-close {
       border: 1px solid var(--line);
       color: var(--text);
@@ -305,9 +338,50 @@ PANDUAN EDIT PORTOFOLIO
     }
 
 
+    /* Fitur Interaktif Tambahan */
+    #heroRoleText { min-height: 1.65em; transition: opacity .25s ease; }
+    .terminal-card { margin-top: 22px; background: linear-gradient(155deg, rgba(10, 23, 39, .97), rgba(7, 16, 29, .98)); border: 1px solid #264666; border-radius: 16px; overflow: hidden; box-shadow: 0 18px 46px rgba(0, 0, 0, .35); }
+    .terminal-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 16px; background: rgba(16, 35, 58, .75); border-bottom: 1px solid rgba(101, 169, 255, .14); flex-wrap: wrap; }
+    .terminal-dots { display: inline-flex; align-items: center; gap: 7px; }
+    .terminal-dots span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .terminal-dots span:nth-child(1) { background: #ff6b6b; }
+    .terminal-dots span:nth-child(2) { background: #ffd166; }
+    .terminal-dots span:nth-child(3) { background: #5ad6a0; }
+    .terminal-title { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .78rem; color: var(--muted); }
+    .terminal-cmds { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px 0; }
+    .term-cmd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .78rem; padding: 6px 11px; border-radius: 8px; border: 1px solid #284766; background: #0e2239; color: #c6ddf8; cursor: pointer; transition: border-color .2s ease, background .2s ease, color .2s ease; }
+    .term-cmd:hover, .term-cmd.is-active { border-color: var(--cyan); background: #163659; color: white; }
+    .terminal-body { margin: 0; padding: 14px 16px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .83rem; line-height: 1.6; color: #cce6ff; white-space: pre-wrap; word-break: break-word; min-height: 118px; }
+    .terminal-prompt { color: #5ad6a0; font-weight: 700; }
+    .terminal-dim { color: #7f9bb8; }
+
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter-btn { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: #0e2137; color: var(--muted); font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; transition: border-color .22s ease, background .22s ease, color .22s ease; }
+    .filter-btn:hover { border-color: var(--cyan); color: var(--text); }
+    .filter-btn.is-active { background: linear-gradient(135deg, #438fe9, #3974c8); border-color: transparent; color: white; }
+    .it-project-card { cursor: pointer; display: flex; flex-direction: column; }
+    .it-project-card.is-hidden { display: none; }
+    .it-project-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+    .it-project-card .gallery-hint { margin-top: auto; padding-top: 14px; }
+    .it-modal-img { width: 100%; max-height: 240px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 16px; display: none; }
+    .it-modal-img.is-visible { display: block; }
+    .it-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .it-detail-box { padding: 14px; border-radius: 12px; background: rgba(16, 35, 58, .75); border: 1px solid rgba(101, 169, 255, .16); }
+    .it-detail-box span { display: block; font-size: .74rem; text-transform: uppercase; letter-spacing: .12em; color: var(--cyan); font-weight: 800; margin-bottom: 6px; }
+    .it-detail-box p { margin: 0; font-size: .9rem; color: var(--muted); line-height: 1.6; }
+    @media (max-width: 600px) { .it-detail-grid { grid-template-columns: 1fr; } }
+
+    .toast { position: fixed; inset-inline: 0; margin-inline: auto; width: max-content; max-width: calc(100vw - 32px); bottom: 26px; transform: translateY(16px); z-index: 50; display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; background: rgba(13, 27, 45, .96); border: 1px solid rgba(90, 214, 160, .55); color: #dff8ee; font-size: .88rem; font-weight: 700; box-shadow: 0 16px 40px rgba(0, 0, 0, .55); opacity: 0; pointer-events: none; }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+    .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: #5ad6a0; box-shadow: 0 0 10px #5ad6a0; }
+
+    .back-to-top { position: fixed; right: 22px; bottom: 22px; z-index: 25; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #2b4d70; background: rgba(13, 27, 45, .9); backdrop-filter: blur(12px); color: var(--cyan); font-size: 1.15rem; font-weight: 800; display: grid; place-items: center; cursor: pointer; box-shadow: 0 12px 30px rgba(0, 0, 0, .45); opacity: 0; transform: translateY(14px) scale(.9); pointer-events: none; transition: opacity .25s ease, transform .25s ease, border-color .25s ease, background .25s ease; }
+    .back-to-top.is-visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .back-to-top:hover { border-color: var(--cyan); background: #163558; color: white; }
+
     @media (prefers-reduced-motion: reduce) {
       .dot::after { animation: none; }
-      .card, .btn, .tag, .project-image img, .image-slot img, .video-cover-mark { transition: none !important; }
+      .card, .btn, .tag, .project-image img, .image-slot img, .video-cover-mark, .back-to-top { transition: none !important; }
     }
   </style>
 </head>
@@ -319,7 +393,10 @@ PANDUAN EDIT PORTOFOLIO
   <header>
     <nav class="wrap" aria-label="Navigasi utama">
       <a class="brand" href="#beranda">CF<span>.</span></a>
-      <div class="navlinks">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Buka menu navigasi">
+        <span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <div class="navlinks" id="primaryNav">
         <a href="#tentang">Tentang</a>
         <a href="#keahlian">Keahlian</a>
         <a href="#proyek">IT</a>
@@ -344,9 +421,9 @@ PANDUAN EDIT PORTOFOLIO
       </div>
       <aside class="hero-card">
         <!-- EDIT: Ganti images/profil.jpg dengan foto profilmu. Jika belum ada foto, huruf CF tetap tampil. -->
-        <div class="avatar"><img src="images/profil.jpg" alt="Foto profil Cantikania" onerror="this.style.display='none'"></div>
+        <div class="avatar"><span aria-hidden="true">CF</span><img src="images/profil.jpg" alt="Foto profil Cantikania" onerror="this.style.display='none'"></div>
         <h2>Junior IT Learner</h2>
-        <p>Networking · Server Administration · Technical Support</p>
+        <p id="heroRoleText">Networking · Server Administration · Technical Support</p>
         <div class="status"><span class="dot"></span> Terbuka untuk belajar dan peluang pemula</div>
       </aside>
     </div>
@@ -400,6 +477,22 @@ PANDUAN EDIT PORTOFOLIO
             <div class="taglist"><span class="tag">Samba</span><span class="tag">SSH</span><span class="tag">FTP</span><span class="tag">DHCP / DNS</span></div>
           </article>
         </div>
+
+        <div class="terminal-card" aria-label="Simulasi terminal TKJ interaktif">
+          <div class="terminal-bar">
+            <div class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="terminal-title">cantikania@debian9: ~/network-lab</div>
+          </div>
+          <div class="terminal-cmds" role="tablist" aria-label="Pilih perintah terminal">
+            <button class="term-cmd is-active" type="button" data-cmd="whoami">whoami</button>
+            <button class="term-cmd" type="button" data-cmd="ip">ip addr</button>
+            <button class="term-cmd" type="button" data-cmd="ping">ping 8.8.8.8</button>
+            <button class="term-cmd" type="button" data-cmd="services">systemctl status</button>
+          </div>
+          <pre class="terminal-body" id="terminalOutput"><span class="terminal-prompt">cantikania@debian9:~$</span> whoami
+Cantikania Finata — Pelajar TKJ SMKN 1 Nglipar
+Fokus: MikroTik · Debian Server · LAN &amp; Troubleshooting</pre>
+        </div>
       </div>
     </section>
 
@@ -408,40 +501,50 @@ PANDUAN EDIT PORTOFOLIO
         <div class="section-head">
           <div class="eyebrow">03 / Proyek & Praktik</div>
           <h2>Pengalaman pembelajaran.</h2>
-          <p>Berikut beberapa pekerjaan praktik yang relevan dengan bidang TKJ. Dokumentasi dan bukti hasil dapat ditambahkan pada setiap proyek.</p>
+          <p>Berikut beberapa pekerjaan praktik yang relevan dengan bidang TKJ. Klik kartu proyek untuk melihat ringkasan konfigurasi dan hasil pengujian.</p>
         </div>
-        <div class="grid">
-          <article class="card">
+        <div class="filter-bar" role="group" aria-label="Filter kategori proyek IT">
+          <button class="filter-btn is-active" type="button" data-filter="all">Semua</button>
+          <button class="filter-btn" type="button" data-filter="jaringan">Jaringan</button>
+          <button class="filter-btn" type="button" data-filter="server">Server</button>
+          <button class="filter-btn" type="button" data-filter="layanan">Layanan</button>
+        </div>
+        <div class="grid" id="itProjectGrid">
+          <article class="card it-project-card" data-category="jaringan" data-project="mikrotik" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="itProjectModal">
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/mikrotik.jpg" alt="Dokumentasi praktik MikroTik dan Winbox" onerror="this.parentElement.style.display='none'"></div>
             <div class="project-top"><span class="label">Jaringan</span><span class="tag">Praktik sekolah</span></div>
             <h3>Konfigurasi MikroTik menggunakan Winbox</h3>
             <p>Mempelajari pengaturan jaringan pada router MikroTik dan memahami hubungan perangkat dalam topologi LAN.</p>
             <div class="taglist"><span class="tag">MikroTik</span><span class="tag">Winbox</span><span class="tag">Topologi LAN</span></div>
+            <div class="gallery-hint">Klik untuk lihat detail ↗</div>
           </article>
-          <article class="card">
+          <article class="card it-project-card" data-category="server" data-project="debian" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="itProjectModal">
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/debian.png" alt="Dokumentasi Debian Server di VirtualBox" onerror="this.parentElement.style.display='none'"></div>
             <div class="project-top"><span class="label">Server</span><span class="tag">Praktik mandiri</span></div>
             <h3>Instalasi Debian Server di VirtualBox</h3>
             <p>Menyiapkan lingkungan virtual Debian untuk mempelajari administrasi server dan pengujian layanan jaringan.</p>
             <div class="taglist"><span class="tag">Debian 9</span><span class="tag">VirtualBox</span><span class="tag">Linux</span></div>
+            <div class="gallery-hint">Klik untuk lihat detail ↗</div>
           </article>
-          <article class="card">
+          <article class="card it-project-card" data-category="layanan" data-project="ftp" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="itProjectModal">
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/ftp.png" alt="Dokumentasi konfigurasi Samba Server" onerror="this.parentElement.style.display='none'"></div>
             <div class="project-top"><span class="label">File Sharing</span><span class="tag">Praktik</span></div>
             <h3>Konfigurasi FTP Server</h3>
             <p>Mempelajari pembuatan folder berbagi di Debian dan menguji akses dari komputer klien melalui jaringan lokal.</p>
             <div class="taglist"><span class="tag">FTP</span><span class="tag">Debian</span><span class="tag">Windows Client</span></div>
+            <div class="gallery-hint">Klik untuk lihat detail ↗</div>
           </article>
-          <article class="card">
+          <article class="card it-project-card" data-category="layanan" data-project="services" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="itProjectModal">
             <!-- EDIT: Ganti file gambar ini dengan screenshot dokumentasi proyekmu. -->
             <div class="project-image"><img src="images/ssh.png" alt="Dokumentasi layanan SSH FTP DHCP dan DNS" onerror="this.parentElement.style.display='none'"></div>
             <div class="project-top"><span class="label">Layanan Jaringan</span><span class="tag">Materi praktik</span></div>
             <h3>Pengenalan SSH, FTP, DHCP, dan DNS</h3>
             <p>Mempelajari fungsi layanan jaringan dan tahapan konfigurasi serta pengujian dasar dalam lingkungan server.</p>
             <div class="taglist"><span class="tag">SSH</span><span class="tag">DHCP</span><span class="tag">DNS</span></div>
+            <div class="gallery-hint">Klik untuk lihat detail ↗</div>
           </article>
         </div>
         <div class="note">Catatan: proyek ditulis sebagai pengalaman praktik/pembelajaran, bukan klaim pengalaman kerja profesional.</div>
@@ -619,9 +722,9 @@ PANDUAN EDIT PORTOFOLIO
           <span>Typography</span><span>Visual Composition</span>
           <span>Color Grading</span><span>Motion Editing</span>
         </div>
-        <!-- EDIT: Ganti tanda # dengan link preset Alight Motion milikmu (contoh: https://alight.link/xxxx). -->
+        <!-- EDIT: Ganti link di href jika preset Alight Motion berubah. -->
         <div class="actions project-actions">
-          <a class="btn primary" href="#" target="_blank" rel="noopener">Buka Preset Alight Motion ↗</a>
+          <a class="btn primary" href="https://alightcreative.com/am/share/u/yw94kySspcXbiU7cve0H2vGchNn1/p/4cii7So3jS-6a9c054428c6748d" target="_blank" rel="noopener">Buka Preset Alight Motion ↗</a>
         </div>
         <p class="gallery-note">Note: Editing dilakukan secara mandiri untuk keperluan portofolio. Materi visual dan audio yang digunakan dapat berasal dari pihak ketiga. Konten ini bukan rilis resmi dan tidak dimaksudkan untuk mengklaim hak cipta atas materi aslinya.</p>
       </div>
@@ -659,6 +762,7 @@ PANDUAN EDIT PORTOFOLIO
         <div class="actions" style="margin:0">
           <!-- EDIT: Ganti email dan username/link akunmu. Hapus tombol yang tidak ingin ditampilkan. -->
           <a class="btn primary" href="mailto:cantikania457@gmail.com">Email Saya</a>
+          <button class="btn" type="button" onclick="copyEmail()">Salin Email</button>
          <!--  a class="btn" href="https://wa.me/6281947383115" target="_blank" rel="noopener">WhatsApp</a -->
           <a class="btn" href="https://www.instagram.com/_wwx.kaa?lqvp=MThtOHBpZjhjbzdrYg==" target="_blank" rel="noopener">Instagram</a>
           <a class="btn" href="https://github.com/cantikania-99" target="_blank" rel="noopener">GitHub</a>
@@ -676,10 +780,13 @@ PANDUAN EDIT PORTOFOLIO
     <div class="gallery-header">
       <h2 id="documentTitle">Dokumentasi</h2>
 
-      <button class="gallery-close" type="button"
-        onclick="closeDocument()">
-        Tutup ✕
-      </button>
+      <div class="gallery-header-actions">
+        <a class="btn primary" id="documentExternal" href="#" target="_blank" rel="noopener">Buka / Unduh PDF ↗</a>
+        <button class="gallery-close" type="button"
+          onclick="closeDocument()">
+          Tutup ✕
+        </button>
+      </div>
     </div>
 
     <iframe id="documentViewer"
@@ -687,9 +794,51 @@ PANDUAN EDIT PORTOFOLIO
       height="550"
       style="border:0; background:white; border-radius:10px;">
     </iframe>
+    <p class="gallery-note">Jika pratinjau PDF tidak muncul di browser HP, gunakan tombol <strong>Buka / Unduh PDF ↗</strong> di atas.</p>
 
   </div>
 </div>
+
+<!-- POP-UP DETAIL PROYEK IT -->
+<div class="gallery-modal" id="itProjectModal" role="dialog" aria-modal="true" aria-labelledby="itModalTitle" onclick="if(event.target===this)closeItProject()">
+  <div class="gallery-panel video-gallery-panel" data-lenis-prevent>
+    <div class="gallery-header">
+      <div>
+        <div class="eyebrow" id="itModalEyebrow">Proyek TKJ</div>
+        <h2 id="itModalTitle">Detail Proyek</h2>
+      </div>
+      <button class="gallery-close" type="button" onclick="closeItProject()" aria-label="Tutup detail proyek">Tutup ✕</button>
+    </div>
+    <img class="it-modal-img" id="itModalImg" src="" alt="">
+    <p id="itModalSummary" style="color:var(--muted); margin:0; line-height:1.7;"></p>
+    <div class="it-detail-grid">
+      <div class="it-detail-box">
+        <span>Tujuan Praktik</span>
+        <p id="itModalGoal"></p>
+      </div>
+      <div class="it-detail-box">
+        <span>Konfigurasi Inti</span>
+        <p id="itModalConfig"></p>
+      </div>
+      <div class="it-detail-box">
+        <span>Hasil Pengujian</span>
+        <p id="itModalResult"></p>
+      </div>
+      <div class="it-detail-box">
+        <span>Lingkungan &amp; Perangkat</span>
+        <p id="itModalEnv"></p>
+      </div>
+    </div>
+    <div class="project-skills" id="itModalTags"></div>
+  </div>
+</div>
+
+<div class="toast" id="copyToast" role="status" aria-live="polite">
+  <span class="toast-dot" aria-hidden="true"></span>
+  <span id="copyToastText">Email tersalin!</span>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas">↑</button>
 
   <!-- Libraries: Lenis (Smooth Scroll), GSAP + ScrollTrigger, Motion -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
@@ -950,6 +1099,8 @@ PANDUAN EDIT PORTOFOLIO
     function openDocument(title, file) {
       document.getElementById('documentTitle').textContent = title;
       document.getElementById('documentViewer').src = file;
+      const extLink = document.getElementById('documentExternal');
+      if (extLink) extLink.href = file;
       const modal = document.getElementById('documentModal');
       animateModalOpen(modal);
     }
@@ -958,6 +1109,8 @@ PANDUAN EDIT PORTOFOLIO
       const modal = document.getElementById('documentModal');
       animateModalClose(modal, function() {
         document.getElementById('documentViewer').src = '';
+        const extLink = document.getElementById('documentExternal');
+        if (extLink) extLink.href = '#';
       });
     }
 
@@ -1057,6 +1210,160 @@ PANDUAN EDIT PORTOFOLIO
       }
     })();
 
+    const IT_PROJECTS = {
+      mikrotik: {
+        eyebrow: '03 · Jaringan · Praktik Sekolah',
+        title: 'Konfigurasi MikroTik menggunakan Winbox',
+        summary: 'Mempelajari pengaturan dasar router MikroTik melalui Winbox serta memahami hubungan antarmuka WAN/LAN dan distribusi alamat IP ke perangkat klien.',
+        goal: 'Mengenali alur koneksi jaringan lokal melalui router MikroTik dan memastikan klien mendapatkan konfigurasi jaringan yang sesuai.',
+        config: 'Akses router via Winbox (MAC/IP), penamaan interface, pengaturan IP Address LAN, gateway, DNS, serta NAT/masquerade dasar.',
+        result: 'Perangkat klien terhubung ke router dalam satu segmen LAN dan dapat melakukan uji konektivitas (ping) ke gateway.',
+        env: 'MikroTik RouterBoard · Winbox · Kabel UTP LAN · PC Client',
+        tags: ['MikroTik', 'Winbox', 'IP Addressing', 'Topologi LAN']
+      },
+      debian: {
+        eyebrow: '03 · Server · Praktik Mandiri',
+        title: 'Instalasi Debian Server di VirtualBox',
+        summary: 'Menyiapkan mesin virtual Debian 9 untuk mempelajari sistem operasi server berbasis teks (CLI), struktur direktori, manajemen paket, dan pengaturan jaringan virtual.',
+        goal: 'Membangun lingkungan praktik server Linux yang stabil dan aman digunakan untuk simulasi berbagai layanan jaringan.',
+        config: 'Pembuatan VM VirtualBox, partisi disk dasar, instalasi base system Debian 9, serta pengaturan adapter jaringan (NAT / Host-Only / Bridge).',
+        result: 'Mesin virtual Debian berjalan normal, siap login melalui CLI, dan dapat berkomunikasi dengan host maupun klien virtual.',
+        env: 'Debian 9 · Oracle VirtualBox · Linux CLI',
+        tags: ['Debian 9', 'VirtualBox', 'Linux CLI', 'Virtual Networking']
+      },
+      ftp: {
+        eyebrow: '03 · File Sharing · Praktik',
+        title: 'Konfigurasi FTP Server',
+        summary: 'Mempelajari konfigurasi layanan berbagi file (FTP) di Debian Server agar pengguna di jaringan lokal dapat mengunggah dan mengunduh berkas secara terstruktur.',
+        goal: 'Menyediakan akses transfer file antara server Linux dan komputer klien Windows dalam satu jaringan lokal.',
+        config: 'Instalasi paket FTP server di Debian, pengaturan direktori berbagi, hak akses user/anonymous, serta restart layanan.',
+        result: 'Klien Windows berhasil terhubung ke server FTP lewat jaringan lokal untuk membaca dan mentransfer file uji.',
+        env: 'Debian Server · Layanan FTP · Windows Client · Jaringan Lokal',
+        tags: ['FTP', 'Debian', 'File Sharing', 'Windows Client']
+      },
+      services: {
+        eyebrow: '03 · Layanan Jaringan · Materi Praktik',
+        title: 'Pengenalan SSH, FTP, DHCP, dan DNS',
+        summary: 'Mempelajari peran masing-masing layanan inti jaringan pada server serta langkah pengujian dasar ketika terjadi gangguan layanan.',
+        goal: 'Memahami bagaimana remote access (SSH), transfer file (FTP), pembagian IP otomatis (DHCP), dan resolusi nama (DNS) bekerja bersama.',
+        config: 'Pengaturan IP statis server, aktivasi port/service SSH, konfigurasi range DHCP, dan pemetaan zona domain sederhana pada DNS.',
+        result: 'Layanan dapat diuji menggunakan perintah dasar klien (ssh, nslookup/dig, ping domain, dan cek IP otomatis).',
+        env: 'Debian 9 · SSH · DHCP Server · DNS (Bind9)',
+        tags: ['SSH', 'FTP', 'DHCP', 'DNS', 'Troubleshooting']
+      }
+    };
+
+    function openItProject(key, cardEl) {
+      const data = IT_PROJECTS[key];
+      const modal = document.getElementById('itProjectModal');
+      if (!data || !modal) return;
+      document.getElementById('itModalEyebrow').textContent = data.eyebrow;
+      document.getElementById('itModalTitle').textContent = data.title;
+      document.getElementById('itModalSummary').textContent = data.summary;
+      document.getElementById('itModalGoal').textContent = data.goal;
+      document.getElementById('itModalConfig').textContent = data.config;
+      document.getElementById('itModalResult').textContent = data.result;
+      document.getElementById('itModalEnv').textContent = data.env;
+
+      const modalImg = document.getElementById('itModalImg');
+      const cardImg = cardEl ? cardEl.querySelector('.project-image img') : null;
+      if (modalImg && cardImg && cardImg.parentElement && cardImg.parentElement.style.display !== 'none' && cardImg.complete && cardImg.naturalWidth > 0) {
+        modalImg.src = cardImg.getAttribute('src') || cardImg.src;
+        modalImg.alt = cardImg.alt || data.title;
+        modalImg.classList.add('is-visible');
+      } else if (modalImg) {
+        modalImg.classList.remove('is-visible');
+        modalImg.src = '';
+      }
+
+      const tagsWrap = document.getElementById('itModalTags');
+      if (tagsWrap) {
+        tagsWrap.innerHTML = '';
+        data.tags.forEach(function(tag) {
+          const span = document.createElement('span');
+          span.textContent = tag;
+          tagsWrap.appendChild(span);
+        });
+      }
+
+      animateModalOpen(modal);
+    }
+
+    function closeItProject() {
+      const modal = document.getElementById('itProjectModal');
+      if (modal) animateModalClose(modal);
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('copyToast');
+      const textEl = document.getElementById('copyToastText');
+      if (!toast) return;
+      if (textEl) textEl.textContent = message;
+      toast.classList.add('is-visible');
+      if (!prefersReducedMotion) {
+        if (window.gsap) {
+          window.gsap.killTweensOf(toast);
+          window.gsap.fromTo(toast,
+            { opacity: 0, y: 16, scale: 0.94 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: 'back.out(1.5)' }
+          );
+        } else {
+          motionSpring(toast, { opacity: [0, 1], y: [16, 0] }, { stiffness: 360, damping: 24 });
+        }
+      }
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() {
+        if (!prefersReducedMotion && window.gsap) {
+          window.gsap.to(toast, {
+            opacity: 0,
+            y: 12,
+            scale: 0.96,
+            duration: 0.24,
+            ease: 'power2.in',
+            onComplete: function() {
+              toast.classList.remove('is-visible');
+              window.gsap.set(toast, { clearProps: 'opacity,transform' });
+            }
+          });
+        } else {
+          toast.classList.remove('is-visible');
+          toast.style.opacity = '';
+          toast.style.transform = '';
+        }
+      }, 2400);
+    }
+
+    function copyEmail() {
+      const email = 'cantikania457@gmail.com';
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(email).then(function() {
+          showToast('Email ' + email + ' tersalin!');
+        }).catch(function() {
+          fallbackCopy(email);
+        });
+      } else {
+        fallbackCopy(email);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Email ' + text + ' tersalin!');
+      } catch (err) {
+        showToast('Salin manual: ' + text);
+      }
+      document.body.removeChild(ta);
+    }
+
     document.addEventListener('keydown', function(event) {
       const lightbox = document.getElementById('posterLightbox');
       const isLightboxOpen = lightbox && lightbox.classList.contains('open') && lightbox.dataset.closing !== '1';
@@ -1069,6 +1376,8 @@ PANDUAN EDIT PORTOFOLIO
         document.querySelectorAll('.gallery-modal.open').forEach(function(modal) {
           if (modal.id === 'documentModal') {
             closeDocument();
+          } else if (modal.id === 'itProjectModal') {
+            closeItProject();
           } else {
             closeGallery(modal.id);
           }
@@ -1081,7 +1390,186 @@ PANDUAN EDIT PORTOFOLIO
 
     (function initLivePortfolio() {
       const headerEl = document.querySelector('header');
+      const navToggle = document.querySelector('.nav-toggle');
+      const navDrawer = document.getElementById('primaryNav');
       const navLinks = Array.from(document.querySelectorAll('.navlinks a[href^="#"]'));
+      const backToTopBtn = document.getElementById('backToTop');
+
+      function updateScrollUI(scrollY) {
+        if (headerEl) headerEl.classList.toggle('is-scrolled', scrollY > 20);
+        if (backToTopBtn) backToTopBtn.classList.toggle('is-visible', scrollY > 380);
+      }
+
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function() {
+          if (lenisInstance) {
+            lenisInstance.scrollTo(0);
+          } else {
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+          }
+        });
+      }
+
+      // Cycling role text in Hero Card
+      const heroRoleEl = document.getElementById('heroRoleText');
+      if (heroRoleEl) {
+        const roles = [
+          'Networking · Server Administration · Technical Support',
+          'MikroTik & Winbox · Topologi LAN',
+          'Debian 9 · Samba · SSH · FTP · DNS',
+          'Poster & Motion Video Editing'
+        ];
+        let roleIndex = 0;
+        let rolePaused = false;
+        const heroCardEl = document.querySelector('.hero-card');
+        if (heroCardEl) {
+          heroCardEl.addEventListener('pointerenter', function() { rolePaused = true; });
+          heroCardEl.addEventListener('pointerleave', function() { rolePaused = false; });
+        }
+        setInterval(function() {
+          if (rolePaused || document.hidden) return;
+          roleIndex = (roleIndex + 1) % roles.length;
+          if (prefersReducedMotion) {
+            heroRoleEl.textContent = roles[roleIndex];
+            return;
+          }
+          heroRoleEl.style.opacity = '0';
+          setTimeout(function() {
+            heroRoleEl.textContent = roles[roleIndex];
+            heroRoleEl.style.opacity = '1';
+          }, 220);
+        }, 3400);
+      }
+
+      // Interactive TKJ Terminal
+      const terminalBody = document.getElementById('terminalOutput');
+      const termCmdButtons = document.querySelectorAll('.term-cmd');
+      const terminalOutputs = {
+        whoami: {
+          cmd: 'whoami',
+          lines: [
+            'Cantikania Finata — Pelajar TKJ SMKN 1 Nglipar',
+            'Fokus: MikroTik · Debian Server · LAN & Troubleshooting'
+          ]
+        },
+        ip: {
+          cmd: 'ip addr show eth0',
+          lines: [
+            '2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> state UP',
+            '    inet 192.168.10.2/24 brd 192.168.10.255 scope global eth0',
+            '    gateway: 192.168.10.1 (MikroTik-LAN)'
+          ]
+        },
+        ping: {
+          cmd: 'ping -c 3 8.8.8.8',
+          lines: [
+            '64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=14.2 ms',
+            '64 bytes from 8.8.8.8: icmp_seq=2 ttl=117 time=13.8 ms',
+            '64 bytes from 8.8.8.8: icmp_seq=3 ttl=117 time=14.1 ms',
+            '--- 3 packets transmitted, 3 received, 0% packet loss ---'
+          ]
+        },
+        services: {
+          cmd: 'systemctl --type=service --state=running | grep -E "ssh|bind|proftpd"',
+          lines: [
+            '  ssh.service       loaded active running  OpenBSD Secure Shell',
+            '  bind9.service     loaded active running  BIND Domain Name Server',
+            '  proftpd.service   loaded active running  ProFTPD FTP Server'
+          ]
+        }
+      };
+
+      termCmdButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const key = btn.getAttribute('data-cmd');
+          const data = terminalOutputs[key];
+          if (!data || !terminalBody) return;
+          termCmdButtons.forEach(function(b) { b.classList.toggle('is-active', b === btn); });
+          terminalBody.innerHTML = '';
+          const promptSpan = document.createElement('span');
+          promptSpan.className = 'terminal-prompt';
+          promptSpan.textContent = 'cantikania@debian9:~$';
+          terminalBody.appendChild(promptSpan);
+          terminalBody.appendChild(document.createTextNode(' ' + data.cmd + '\n' + data.lines.join('\n')));
+          if (!prefersReducedMotion) {
+            motionSpring(terminalBody, { opacity: [0.35, 1], y: [6, 0] }, { stiffness: 360, damping: 26 });
+          }
+        });
+      });
+
+      // IT Project Cards Modal & Category Filter
+      const itCards = Array.from(document.querySelectorAll('.it-project-card'));
+      itCards.forEach(function(card) {
+        const key = card.getAttribute('data-project');
+        card.addEventListener('click', function() { openItProject(key, card); });
+        card.addEventListener('keydown', function(ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            openItProject(key, card);
+          }
+        });
+      });
+
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const filter = btn.getAttribute('data-filter');
+          filterButtons.forEach(function(b) { b.classList.toggle('is-active', b === btn); });
+          const shown = [];
+          itCards.forEach(function(card) {
+            const cat = card.getAttribute('data-category');
+            const match = filter === 'all' || cat === filter;
+            card.classList.toggle('is-hidden', !match);
+            if (match) shown.push(card);
+          });
+          if (!prefersReducedMotion && shown.length) {
+            if (window.gsap) {
+              window.gsap.fromTo(shown,
+                { opacity: 0, y: 16, scale: 0.97 },
+                { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.06, ease: 'power3.out', clearProps: 'transform,opacity' }
+              );
+            } else {
+              shown.forEach(function(c, idx) {
+                motionSpring(c, { opacity: [0, 1], y: [14, 0] }, { delay: idx * 0.05 });
+              });
+            }
+          }
+          if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+        });
+      });
+
+      function setMobileNavOpen(open) {
+        if (!navToggle || !navDrawer) return;
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+        navDrawer.classList.toggle('is-open', open);
+        if (open && !prefersReducedMotion) {
+          motionSpring(navDrawer, { opacity: [0, 1], y: [-10, 0] }, { stiffness: 360, damping: 26 });
+        }
+      }
+
+      if (navToggle && navDrawer) {
+        navToggle.addEventListener('click', function() {
+          const isOpen = navDrawer.classList.contains('is-open');
+          setMobileNavOpen(!isOpen);
+        });
+        navLinks.forEach(function(link) {
+          link.addEventListener('click', function() {
+            setMobileNavOpen(false);
+          });
+        });
+        document.addEventListener('click', function(ev) {
+          if (navDrawer.classList.contains('is-open') && headerEl && !headerEl.contains(ev.target)) {
+            setMobileNavOpen(false);
+          }
+        });
+        document.addEventListener('keydown', function(ev) {
+          if (ev.key === 'Escape' && navDrawer.classList.contains('is-open')) {
+            setMobileNavOpen(false);
+            navToggle.focus();
+          }
+        });
+      }
 
       // 1. Lenis Smooth Scroll + Header Scroll State + Anchor Navigation
       if (!prefersReducedMotion && typeof window.Lenis === 'function') {
@@ -1093,7 +1581,7 @@ PANDUAN EDIT PORTOFOLIO
         });
 
         lenisInstance.on('scroll', function(e) {
-          if (headerEl) headerEl.classList.toggle('is-scrolled', e.scroll > 20);
+          updateScrollUI(e.scroll);
           if (window.ScrollTrigger) window.ScrollTrigger.update();
         });
 
@@ -1117,7 +1605,7 @@ PANDUAN EDIT PORTOFOLIO
         }
       } else {
         window.addEventListener('scroll', function() {
-          if (headerEl) headerEl.classList.toggle('is-scrolled', window.scrollY > 20);
+          updateScrollUI(window.scrollY);
         }, { passive: true });
       }
 
@@ -1250,7 +1738,7 @@ PANDUAN EDIT PORTOFOLIO
             if (!sec) return;
             window.ScrollTrigger.create({
               trigger: sec,
-              start: 'top 42%',
+              start: id === 'beranda' ? 'top top' : 'top 42%',
               end: 'bottom 42%',
               onToggle: function(self) {
                 if (!self.isActive) return;
@@ -1263,21 +1751,60 @@ PANDUAN EDIT PORTOFOLIO
         }
       }
 
-      // 3. Motion (Spring tactile hover/press micro-interactions + card spotlight)
+      // 3. Motion & GSAP Interactive Effects (Magnetic buttons + 3D Tilt cards + Spotlight)
       if (!prefersReducedMotion) {
+        const canHoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        // Magnetic buttons on desktop, spring hover/press fallback otherwise
         document.querySelectorAll('.btn').forEach(function(btn) {
-          btn.addEventListener('pointerenter', function() {
-            motionSpring(btn, { y: -2, scale: 1.025 }, { stiffness: 420, damping: 22 });
-          });
-          btn.addEventListener('pointerleave', function() {
-            motionSpring(btn, { y: 0, scale: 1 }, { stiffness: 360, damping: 24 });
-          });
-          btn.addEventListener('pointerdown', function() {
-            motionSpring(btn, { y: 0, scale: 0.96 }, { stiffness: 520, damping: 26 });
-          });
-          btn.addEventListener('pointerup', function() {
-            motionSpring(btn, { y: -2, scale: 1.02 }, { stiffness: 420, damping: 22 });
-          });
+          if (canHoverFine && window.gsap) {
+            const gsap = window.gsap;
+            const xTo = gsap.quickTo(btn, 'x', { duration: 0.32, ease: 'power3.out' });
+            const yTo = gsap.quickTo(btn, 'y', { duration: 0.32, ease: 'power3.out' });
+            const scaleTo = gsap.quickTo(btn, 'scale', { duration: 0.28, ease: 'power3.out' });
+            const maxShift = btn.classList.contains('primary') ? 10 : 7;
+
+            btn.addEventListener('pointerenter', function() {
+              gsap.killTweensOf(btn);
+              scaleTo(1.035);
+            });
+            btn.addEventListener('pointermove', function(ev) {
+              const rect = btn.getBoundingClientRect();
+              const relX = (ev.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+              const relY = (ev.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+              xTo(Math.max(-maxShift, Math.min(maxShift, relX * maxShift)));
+              yTo(Math.max(-maxShift, Math.min(maxShift, relY * maxShift)) - 2);
+            });
+            btn.addEventListener('pointerdown', function() {
+              scaleTo(0.95);
+            });
+            btn.addEventListener('pointerup', function() {
+              scaleTo(1.035);
+            });
+            btn.addEventListener('pointerleave', function() {
+              gsap.to(btn, {
+                x: 0,
+                y: 0,
+                scale: 1,
+                duration: 0.55,
+                ease: 'elastic.out(1, 0.45)',
+                overwrite: 'auto'
+              });
+            });
+          } else {
+            btn.addEventListener('pointerenter', function() {
+              motionSpring(btn, { y: -2, scale: 1.025 }, { stiffness: 420, damping: 22 });
+            });
+            btn.addEventListener('pointerleave', function() {
+              motionSpring(btn, { y: 0, scale: 1 }, { stiffness: 360, damping: 24 });
+            });
+            btn.addEventListener('pointerdown', function() {
+              motionSpring(btn, { y: 0, scale: 0.96 }, { stiffness: 520, damping: 26 });
+            });
+            btn.addEventListener('pointerup', function() {
+              motionSpring(btn, { y: -2, scale: 1.02 }, { stiffness: 420, damping: 22 });
+            });
+          }
         });
 
         document.querySelectorAll('.tag, .project-skills span').forEach(function(pill) {
@@ -1309,18 +1836,59 @@ PANDUAN EDIT PORTOFOLIO
           });
         }
 
+        // 3D Tilt helper for hero-card & grid cards
+        function attachCardTilt(el, opts) {
+          const maxTilt = opts.maxTilt || 5;
+          const hoverLift = opts.hoverLift || 0;
+          if (canHoverFine && window.gsap) {
+            const gsap = window.gsap;
+            gsap.set(el, { transformPerspective: 950 });
+            const rxTo = gsap.quickTo(el, 'rotateX', { duration: 0.4, ease: 'power3.out' });
+            const ryTo = gsap.quickTo(el, 'rotateY', { duration: 0.4, ease: 'power3.out' });
+            const liftTo = hoverLift ? gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power3.out' }) : null;
+
+            el.addEventListener('pointermove', function(ev) {
+              const rect = el.getBoundingClientRect();
+              const px = (ev.clientX - rect.left) / rect.width;
+              const py = (ev.clientY - rect.top) / rect.height;
+              el.style.setProperty('--mx', (ev.clientX - rect.left) + 'px');
+              el.style.setProperty('--my', (ev.clientY - rect.top) + 'px');
+              ryTo((px - 0.5) * maxTilt * 2);
+              rxTo((0.5 - py) * maxTilt * 2);
+            });
+            el.addEventListener('pointerenter', function() {
+              if (liftTo) liftTo(hoverLift);
+            });
+            el.addEventListener('pointerleave', function() {
+              rxTo(0);
+              ryTo(0);
+              if (liftTo) liftTo(0);
+            });
+          } else {
+            el.addEventListener('pointermove', function(ev) {
+              const rect = el.getBoundingClientRect();
+              el.style.setProperty('--mx', (ev.clientX - rect.left) + 'px');
+              el.style.setProperty('--my', (ev.clientY - rect.top) + 'px');
+            });
+            if (hoverLift) {
+              el.addEventListener('pointerenter', function() {
+                motionSpring(el, { y: hoverLift }, { stiffness: 340, damping: 24 });
+              });
+              el.addEventListener('pointerleave', function() {
+                motionSpring(el, { y: 0 }, { stiffness: 300, damping: 25 });
+              });
+            }
+          }
+        }
+
+        const heroCard = document.querySelector('.hero-card');
+        if (heroCard) {
+          attachCardTilt(heroCard, { maxTilt: 6.5, hoverLift: 0 });
+        }
+
         document.querySelectorAll('.card').forEach(function(card) {
-          card.addEventListener('pointermove', function(ev) {
-            const rect = card.getBoundingClientRect();
-            card.style.setProperty('--mx', (ev.clientX - rect.left) + 'px');
-            card.style.setProperty('--my', (ev.clientY - rect.top) + 'px');
-          });
-          card.addEventListener('pointerenter', function() {
-            motionSpring(card, { y: -4 }, { stiffness: 340, damping: 24 });
-          });
-          card.addEventListener('pointerleave', function() {
-            motionSpring(card, { y: 0 }, { stiffness: 300, damping: 25 });
-          });
+          const isCreative = card.classList.contains('creative-card');
+          attachCardTilt(card, { maxTilt: isCreative ? 5.5 : 3.5, hoverLift: -4 });
         });
       }
     })();
