@@ -230,14 +230,38 @@ PANDUAN EDIT PORTOFOLIO
     }
     .gallery-close:hover { border-color: var(--cyan); background: #163354; }
     .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .gallery-item { margin: 0; background: #10233a; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-    .gallery-item img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-    .gallery-item figcaption { padding: 9px 11px; color: var(--muted); font-size: .85rem; }
+    .gallery-item { margin: 0; background: #10233a; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+    .gallery-item:hover, .gallery-item:focus-visible { border-color: var(--cyan); box-shadow: 0 12px 28px rgba(0,0,0,.4); transform: translateY(-3px); outline: none; }
+    .gallery-item img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .45s cubic-bezier(.22, 1, .36, 1); }
+    .gallery-item:hover img { transform: scale(1.045); }
+    .gallery-item figcaption { padding: 9px 11px; color: var(--muted); font-size: .85rem; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .gallery-item figcaption::after { content: "⤢"; font-size: .82rem; color: var(--cyan); opacity: .75; flex-shrink: 0; }
     .gallery-note { color: var(--muted); font-size: .85rem; margin: 16px 0 0; }
+    .lightbox-modal { z-index: 40; background: rgba(2, 8, 16, .93); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .lightbox-panel { width: min(960px, 100%); max-height: 94vh; display: flex; flex-direction: column; gap: 14px; padding: 20px; background: rgba(13, 27, 45, .96); border: 1px solid #2d5175; border-radius: 20px; box-shadow: 0 28px 90px rgba(0, 0, 0, .72); }
+    .lightbox-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .lightbox-heading { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .lightbox-counter { font-size: .76rem; font-weight: 800; letter-spacing: .12em; color: var(--cyan); background: #102943; border: 1px solid #294866; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+    .lightbox-title { margin: 0; font-size: 1.08rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lightbox-stage { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 260px; }
+    .lightbox-frame { display: flex; align-items: center; justify-content: center; min-height: 240px; max-height: 70vh; background: #07111f; border: 1px solid rgba(101,169,255,.16); border-radius: 14px; overflow: hidden; padding: 10px; }
+    .lightbox-img { display: block; max-width: 100%; max-height: calc(70vh - 20px); width: auto; height: auto; object-fit: contain; border-radius: 8px; will-change: transform, opacity; }
+    .lightbox-nav { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: #10233a; color: var(--text); font-size: 1.35rem; line-height: 1; display: grid; place-items: center; cursor: pointer; transition: border-color .25s ease, background .25s ease, opacity .2s ease; }
+    .lightbox-nav:hover { border-color: var(--cyan); background: #173659; }
+    .lightbox-nav:disabled { opacity: .35; cursor: default; }
+    .lightbox-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: .84rem; }
+    .lightbox-hint { font-size: .78rem; color: #8ea6c2; }
+    .lightbox-mobile-nav { display: none; gap: 8px; }
     @media(max-width: 650px) {
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-modal { padding: 12px; }
       .gallery-panel { padding: 16px; }
+      .lightbox-panel { padding: 14px; }
+      .lightbox-stage { grid-template-columns: 1fr; }
+      .lightbox-stage > .lightbox-nav { display: none; }
+      .lightbox-mobile-nav { display: flex; }
+      .lightbox-frame { max-height: 62vh; }
+      .lightbox-img { max-height: calc(62vh - 20px); }
     }
     @media(max-width: 380px) { .gallery-grid { grid-template-columns: 1fr; } }
 
@@ -524,7 +548,34 @@ PANDUAN EDIT PORTOFOLIO
           <figure class="gallery-item"><img src="poster/poster-5.png" alt="Poster karya 5" onerror="this.parentElement.style.display='none'"><figcaption>Poster 05</figcaption></figure>
           <figure class="gallery-item"><img src="poster/poster-6.png" alt="Poster karya 6" onerror="this.parentElement.style.display='none'"><figcaption>Poster 06</figcaption></figure>
         </div>
-        <p class="gallery-note">Note: Editing dilakukan secara mandiri untuk keperluan portofolio. Materi visual dan audio yang digunakan dapat berasal dari pihak ketiga. Konten ini bukan rilis resmi dan tidak dimaksudkan untuk mengklaim hak cipta atas materi aslinya.</p>
+        <p class="gallery-note">Klik poster untuk memperbesar gambar. Note: Editing dilakukan secara mandiri untuk keperluan portofolio. Materi visual dan audio yang digunakan dapat berasal dari pihak ketiga. Konten ini bukan rilis resmi dan tidak dimaksudkan untuk mengklaim hak cipta atas materi aslinya.</p>
+      </div>
+    </div>
+
+    <!-- LIGHTBOX POSTER -->
+    <div class="gallery-modal lightbox-modal" id="posterLightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" onclick="if(event.target===this)closePosterLightbox()">
+      <div class="gallery-panel lightbox-panel" data-lenis-prevent>
+        <div class="lightbox-topbar">
+          <div class="lightbox-heading">
+            <span class="lightbox-counter" id="lightboxCounter">01 / 01</span>
+            <h2 class="lightbox-title" id="lightboxTitle">Poster</h2>
+          </div>
+          <button class="gallery-close" type="button" onclick="closePosterLightbox()" aria-label="Tutup lightbox">Tutup ✕</button>
+        </div>
+        <div class="lightbox-stage" id="lightboxStage">
+          <button class="lightbox-nav" id="lightboxPrev" type="button" onclick="stepPosterLightbox(-1)" aria-label="Poster sebelumnya">‹</button>
+          <div class="lightbox-frame">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="">
+          </div>
+          <button class="lightbox-nav" id="lightboxNext" type="button" onclick="stepPosterLightbox(1)" aria-label="Poster berikutnya">›</button>
+        </div>
+        <div class="lightbox-footer">
+          <span class="lightbox-hint">Geser atau tekan ← / → untuk berpindah · Esc untuk tutup</span>
+          <div class="lightbox-mobile-nav">
+            <button class="lightbox-nav" id="lightboxPrevMobile" type="button" onclick="stepPosterLightbox(-1)" aria-label="Poster sebelumnya">‹</button>
+            <button class="lightbox-nav" id="lightboxNextMobile" type="button" onclick="stepPosterLightbox(1)" aria-label="Poster berikutnya">›</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -570,7 +621,7 @@ PANDUAN EDIT PORTOFOLIO
         </div>
         <!-- EDIT: Ganti tanda # dengan link preset Alight Motion milikmu (contoh: https://alight.link/xxxx). -->
         <div class="actions project-actions">
-          <a class="btn primary" href="https://alightcreative.com/am/share/u/yw94kySspcXbiU7cve0H2vGchNn1/p/4cii7So3jS-6a9c054428c6748d" target="_blank" rel="noopener">Preset Alight Motion ↗</a>
+          <a class="btn primary" href="#" target="_blank" rel="noopener">Buka Preset Alight Motion ↗</a>
         </div>
         <p class="gallery-note">Note: Editing dilakukan secara mandiri untuk keperluan portofolio. Materi visual dan audio yang digunakan dapat berasal dari pihak ketiga. Konten ini bukan rilis resmi dan tidak dimaksudkan untuk mengklaim hak cipta atas materi aslinya.</p>
       </div>
@@ -649,7 +700,8 @@ PANDUAN EDIT PORTOFOLIO
   <script>
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lenisInstance = null;
-    let lastModalTrigger = null;
+    let posterLightboxItems = [];
+    let posterLightboxIndex = 0;
 
     function motionSpring(el, keyframes, opts = {}) {
       if (prefersReducedMotion || !el || !window.Motion || typeof window.Motion.animate !== 'function') return null;
@@ -675,7 +727,7 @@ PANDUAN EDIT PORTOFOLIO
       delete modal.dataset.closing;
       modal.style.pointerEvents = '';
       if (document.activeElement && !modal.contains(document.activeElement)) {
-        lastModalTrigger = document.activeElement;
+        modal._returnFocusEl = document.activeElement;
       }
 
       if (window.gsap) {
@@ -762,9 +814,9 @@ PANDUAN EDIT PORTOFOLIO
           document.body.style.overflow = '';
           if (lenisInstance) lenisInstance.start();
         }
-        if (lastModalTrigger && document.contains(lastModalTrigger)) {
-          lastModalTrigger.focus();
-          lastModalTrigger = null;
+        if (modal._returnFocusEl && document.contains(modal._returnFocusEl)) {
+          modal._returnFocusEl.focus();
+          modal._returnFocusEl = null;
         }
       };
 
@@ -909,8 +961,111 @@ PANDUAN EDIT PORTOFOLIO
       });
     }
 
+    function getVisiblePosterItems() {
+      return Array.from(document.querySelectorAll('#posterGallery .gallery-item')).filter(function(item) {
+        const img = item.querySelector('img');
+        return item.style.display !== 'none' && img && img.style.display !== 'none';
+      });
+    }
+
+    function renderPosterLightbox(direction) {
+      const item = posterLightboxItems[posterLightboxIndex];
+      if (!item) return;
+      const imgEl = item.querySelector('img');
+      const captionEl = item.querySelector('figcaption');
+      const lbImg = document.getElementById('lightboxImg');
+      const lbTitle = document.getElementById('lightboxTitle');
+      const lbCounter = document.getElementById('lightboxCounter');
+      const total = posterLightboxItems.length;
+      const titleText = captionEl ? captionEl.textContent.trim() : ('Poster ' + (posterLightboxIndex + 1));
+
+      if (lbTitle) lbTitle.textContent = titleText;
+      if (lbCounter) {
+        lbCounter.textContent = String(posterLightboxIndex + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+      }
+      ['lightboxPrev', 'lightboxNext', 'lightboxPrevMobile', 'lightboxNextMobile'].forEach(function(btnId) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.disabled = total <= 1;
+      });
+
+      if (!lbImg || !imgEl) return;
+      lbImg.src = imgEl.getAttribute('src') || imgEl.src;
+      lbImg.alt = imgEl.alt || titleText;
+
+      if (!prefersReducedMotion && direction !== 0) {
+        const offsetX = direction > 0 ? 28 : -28;
+        if (window.gsap) {
+          window.gsap.killTweensOf(lbImg);
+          window.gsap.fromTo(lbImg,
+            { opacity: 0, x: offsetX, scale: 0.97 },
+            { opacity: 1, x: 0, scale: 1, duration: 0.3, ease: 'power3.out', clearProps: 'transform' }
+          );
+        } else {
+          motionSpring(lbImg, { opacity: [0, 1], x: [offsetX, 0], scale: [0.97, 1] }, { stiffness: 340, damping: 26 });
+        }
+      }
+    }
+
+    function openPosterLightbox(item) {
+      posterLightboxItems = getVisiblePosterItems();
+      if (!posterLightboxItems.length) return;
+      const idx = posterLightboxItems.indexOf(item);
+      posterLightboxIndex = idx >= 0 ? idx : 0;
+      renderPosterLightbox(0);
+      const modal = document.getElementById('posterLightbox');
+      if (modal) animateModalOpen(modal);
+    }
+
+    function closePosterLightbox() {
+      const modal = document.getElementById('posterLightbox');
+      if (modal) animateModalClose(modal);
+    }
+
+    function stepPosterLightbox(delta) {
+      if (posterLightboxItems.length <= 1) return;
+      posterLightboxIndex = (posterLightboxIndex + delta + posterLightboxItems.length) % posterLightboxItems.length;
+      renderPosterLightbox(delta);
+    }
+
+    (function initPosterLightbox() {
+      document.querySelectorAll('#posterGallery .gallery-item').forEach(function(item) {
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-label', 'Perbesar ' + (item.textContent.trim() || 'poster'));
+        item.addEventListener('click', function() {
+          openPosterLightbox(item);
+        });
+        item.addEventListener('keydown', function(ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            openPosterLightbox(item);
+          }
+        });
+      });
+
+      const stage = document.getElementById('lightboxStage');
+      if (stage) {
+        let touchStartX = 0;
+        stage.addEventListener('touchstart', function(ev) {
+          if (ev.touches && ev.touches[0]) touchStartX = ev.touches[0].clientX;
+        }, { passive: true });
+        stage.addEventListener('touchend', function(ev) {
+          if (!ev.changedTouches || !ev.changedTouches[0]) return;
+          const dx = ev.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(dx) > 42) stepPosterLightbox(dx < 0 ? 1 : -1);
+        }, { passive: true });
+      }
+    })();
+
     document.addEventListener('keydown', function(event) {
+      const lightbox = document.getElementById('posterLightbox');
+      const isLightboxOpen = lightbox && lightbox.classList.contains('open') && lightbox.dataset.closing !== '1';
+
       if (event.key === 'Escape') {
+        if (isLightboxOpen) {
+          closePosterLightbox();
+          return;
+        }
         document.querySelectorAll('.gallery-modal.open').forEach(function(modal) {
           if (modal.id === 'documentModal') {
             closeDocument();
@@ -918,6 +1073,9 @@ PANDUAN EDIT PORTOFOLIO
             closeGallery(modal.id);
           }
         });
+      } else if (isLightboxOpen && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+        event.preventDefault();
+        stepPosterLightbox(event.key === 'ArrowRight' ? 1 : -1);
       }
     });
 
